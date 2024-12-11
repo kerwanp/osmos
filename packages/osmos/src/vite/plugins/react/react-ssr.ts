@@ -1,6 +1,5 @@
 import { readFile } from "fs/promises";
 import { join } from "path";
-import { fileURLToPath } from "url";
 import {
   createServerModuleRunner,
   EnvironmentOptions,
@@ -47,6 +46,12 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
 
           const ssrAssets = {
             bootstrapModules: [`/_osmos/${entry?.file}`],
+          };
+
+          return `export default ${JSON.stringify(ssrAssets)}`;
+        } else {
+          const ssrAssets = {
+            bootstrapModules: [`/_osmos/@id/__x00__$osmos/client/entry`],
           };
 
           return `export default ${JSON.stringify(ssrAssets)}`;

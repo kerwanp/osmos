@@ -6,6 +6,9 @@ export type ReactClientOptions = {
 };
 
 export function reactClient(options: ReactClientOptions): PluginOption {
+  const entryId = "$osmos/client/entry";
+  const entryResolvedId = `\0${entryId}`;
+
   return {
     name: "osmos:react-client",
     config(config) {
@@ -32,6 +35,21 @@ export function reactClient(options: ReactClientOptions): PluginOption {
           },
         },
       };
+    },
+    resolveId(id) {
+      if (id === entryId) {
+        return entryResolvedId;
+      }
+    },
+    async load(id) {
+      if (id === entryResolvedId) {
+        return `
+          for (let i = 0; !window.__vite_plugin_react_preamble_installed__; i++) {
+            await new Promise(resolve => setTimeout(resolve, 10 * (2 ** i)));
+          }
+          import("${options.entry}");
+        `;
+      }
     },
   };
 }

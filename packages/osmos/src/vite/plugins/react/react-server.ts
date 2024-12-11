@@ -71,7 +71,10 @@ function test(options: ReactServerOptions): PluginOption {
           clientReferences.set(id, id);
         }
 
-        if (__vite_rsc_manager.buildStep === "build") {
+        if (
+          this.environment.mode === "dev" ||
+          __vite_rsc_manager.buildStep === "build"
+        ) {
           return source;
         }
       }

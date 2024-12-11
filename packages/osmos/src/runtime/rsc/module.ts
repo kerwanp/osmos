@@ -30,7 +30,6 @@ export default defineModule({
             "index.js",
           ),
           middleware: true,
-          lazy: true,
         });
       });
     }

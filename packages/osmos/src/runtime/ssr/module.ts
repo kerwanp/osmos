@@ -22,7 +22,6 @@ export default defineModule({
       app.hook("nitro:init", async (nitro) => {
         nitro.options.handlers.push({
           handler: join(nitro.options.buildDir, "dist", "ssr", "index.js"),
-          lazy: true,
         });
       });
     }

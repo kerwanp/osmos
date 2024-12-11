@@ -19,7 +19,7 @@ async function importRSC() {
     mod = import(
       fileURLToPath(
         new URL(
-          "../../.osmos/dist/react-server/index.js" as string,
+          "../../.osmos/dist/react-server/index.js" as string /* @vite-ignore */,
           import.meta.url,
         ),
       )
@@ -53,9 +53,8 @@ export default eventHandler(async (event) => {
   // TODO: Use rootDir
   const element = await ReactServerDOM.createFromNodeStream(rscPayload, "", "");
 
-  const assets = await import("$osmos/ssr-assets" as string).then(
-    (r) => r.default,
-  );
+  // @ts-ignore
+  const assets = await import("$osmos/ssr-assets").then((r) => r.default);
 
   const stream = await new Promise(async (resolve) => {
     const stream = ReactDOM.renderToPipeableStream(element, {
