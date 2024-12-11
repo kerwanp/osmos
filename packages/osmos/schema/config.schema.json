@@ -1,0 +1,101 @@
+{
+  "id": "#",
+  "properties": {
+    "app": {
+      "id": "#app",
+      "properties": {
+        "baseURL": {
+          "id": "#app/baseURL",
+          "default": "/",
+          "type": "string"
+        }
+      },
+      "default": {
+        "baseURL": "/"
+      },
+      "type": "object"
+    },
+    "rootDir": {
+      "id": "#rootDir",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos",
+      "type": "string"
+    },
+    "appDir": {
+      "id": "#appDir",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos/src",
+      "type": "string"
+    },
+    "workspaceDir": {
+      "id": "#workspaceDir",
+      "default": "/home/martin/workspace/random/osmos",
+      "type": "string"
+    },
+    "buildDir": {
+      "id": "#buildDir",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+      "type": "string"
+    },
+    "modules": {
+      "id": "#modules",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "any"
+      }
+    },
+    "extensions": {
+      "id": "#extensions",
+      "default": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx"
+      ],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dev": {
+      "type": "boolean",
+      "id": "#dev",
+      "default": false
+    },
+    "test": {
+      "type": "boolean",
+      "id": "#test",
+      "default": false
+    },
+    "debug": {
+      "id": "#debug",
+      "default": false,
+      "type": "boolean"
+    },
+    "logLevel": {
+      "id": "#logLevel",
+      "default": 3,
+      "type": "number"
+    }
+  },
+  "default": {
+    "app": {
+      "baseURL": "/"
+    },
+    "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
+    "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+    "workspaceDir": "/home/martin/workspace/random/osmos",
+    "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+    "modules": [],
+    "extensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "dev": false,
+    "test": false,
+    "debug": false,
+    "logLevel": 3
+  },
+  "type": "object"
+}

@@ -1,9 +1,10 @@
 {
-  "name": "osmos",
+  "name": "workspace",
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --filter=./packages/*",
+    "playground": "turbo dev --filter=playground",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

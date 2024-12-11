@@ -1,0 +1,20 @@
+{
+  "app": {
+    "baseURL": "/"
+  },
+  "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
+  "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+  "workspaceDir": "/home/martin/workspace/random/osmos",
+  "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+  "modules": [],
+  "extensions": [
+    "js",
+    "jsx",
+    "ts",
+    "tsx"
+  ],
+  "dev": false,
+  "test": false,
+  "debug": false,
+  "logLevel": 3
+}

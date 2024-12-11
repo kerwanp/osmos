@@ -1,0 +1,60 @@
+{
+  "name": "osmos",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm build:schema && rollup -c rollup.config.js --watch",
+    "build": "pnpm build:schema && rollup -c rollup.config.js",
+    "build:schema": "unbuild"
+  },
+  "bin": {
+    "osmos": "./bin/osmos.mjs"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./config": "./dist/config/index.js",
+    "./link": "./dist/router/browser/link.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "c12": "^2.0.1",
+    "citty": "^0.1.6",
+    "consola": "^3.2.3",
+    "defu": "^6.1.4",
+    "es-module-lexer": "^1.5.4",
+    "esbuild": "^0.24.0",
+    "fast-glob": "^3.3.2",
+    "h3": "^1.13.0",
+    "hookable": "^5.5.3",
+    "invariant": "^2.2.4",
+    "mlly": "^1.7.3",
+    "nitropack": "^2.10.4",
+    "pathe": "^1.1.2",
+    "pkg-types": "^1.2.1",
+    "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
+    "react-server-dom-webpack": "^19.0.0",
+    "std-env": "^3.8.0",
+    "untyped": "^1.5.1",
+    "vite": "^6.0.3",
+    "vite-plugin-virtual": "^0.3.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/invariant": "^2.2.37",
+    "@types/node": "^22.10.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "rollup": "^4.28.1",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "type-fest": "^4.30.0",
+    "unbuild": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
