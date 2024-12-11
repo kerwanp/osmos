@@ -1,6 +1,10 @@
 import React from "react";
 import { createFromFetch, encodeReply } from "react-server-dom-esm/client";
 import { hydrateRoot } from "../../router/browser/dom";
+// @ts-expect-error
+import test from "$osmos/client-references";
+
+console.log(test);
 
 const getGlobalLocation = () =>
   window.location.pathname + window.location.search;

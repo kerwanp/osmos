@@ -1,12 +1,13 @@
 import { fileURLToPath } from "mlly";
 import defineModule from "../../module/define";
 import { eventHandler } from "h3";
+import { join } from "pathe";
 
 export default defineModule({
   name: "osmos:ssr",
   setup(app) {
-    app.hook("nitro:init", async (nitro) => {
-      if (app.options.dev) {
+    if (app.options.dev) {
+      app.hook("nitro:init", async (nitro) => {
         nitro.options.devHandlers.push({
           handler: eventHandler(async (event) => {
             const entry = await __vite_ssr_runner
@@ -16,7 +17,14 @@ export default defineModule({
             return entry(event);
           }),
         });
-      }
-    });
+      });
+    } else {
+      app.hook("nitro:init", async (nitro) => {
+        nitro.options.handlers.push({
+          handler: join(nitro.options.buildDir, "dist", "ssr", "index.js"),
+          lazy: true,
+        });
+      });
+    }
   },
 });

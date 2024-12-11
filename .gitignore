@@ -23,6 +23,8 @@ coverage
 
 # Build Outputs
 .next/
+.output/
+.osmos/
 out/
 build
 dist

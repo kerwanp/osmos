@@ -1,5 +1,6 @@
 import { defineCommand } from "citty";
 import dev from "./dev";
+import build from "./build";
 
 export default defineCommand({
   meta: {
@@ -7,5 +8,6 @@ export default defineCommand({
   },
   subCommands: {
     dev,
+    build,
   },
 });

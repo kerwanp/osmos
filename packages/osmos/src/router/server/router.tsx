@@ -1,31 +1,27 @@
 import type { FC } from "react";
 import { LayoutRoute, PageRoute, Route } from "../types";
 
-type Importer = (path: string) => Promise<FC<any>>;
+export async function importRoute(route: Route) {
+  return (route.source as any).import().then((r: any) => r.default);
+}
 
 export async function ServerRouter({
   routes,
   location,
-  importer,
 }: {
   routes: Route[];
   location: string;
-  importer: Importer;
 }) {
   const layout = routes.find(
     (r) => r.type === "layout" && location.startsWith(r.path),
   ) as LayoutRoute | undefined;
 
   if (layout) {
-    const Layout = await importer(layout.source);
+    const Layout = await importRoute(layout);
 
     return (
       <Layout>
-        <ServerRouter
-          routes={layout.children}
-          location={location}
-          importer={importer}
-        />
+        <ServerRouter routes={layout.children} location={location} />
       </Layout>
     );
   }
@@ -34,7 +30,7 @@ export async function ServerRouter({
     | PageRoute
     | undefined;
   if (page) {
-    const Page = await importer(page.source);
+    const Page = await importRoute(page);
 
     return <Page />;
   }
@@ -42,12 +38,6 @@ export async function ServerRouter({
   return <div>404 page not found</div>;
 }
 
-export function createServerRouter(
-  routes: Route[],
-  location: string,
-  importer: Importer,
-): FC {
-  return () => (
-    <ServerRouter routes={routes} location={location} importer={importer} />
-  );
+export function createServerRouter(routes: Route[], location: string): FC {
+  return () => <ServerRouter routes={routes} location={location} />;
 }

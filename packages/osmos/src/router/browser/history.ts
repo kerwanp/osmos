@@ -48,7 +48,6 @@ export class BrowserHistory
 
     if (typeof window === "undefined") return;
     window.addEventListener("popstate", (ev) => {
-      console.log(ev);
       this.dispatchEvent("pop", new PopEvent());
     });
   }

@@ -8,7 +8,6 @@ import {
 import { createServer } from "vite";
 import { OsmosApp } from "../core/app";
 import { fileURLToPath } from "url";
-import { join } from "pathe";
 
 export async function createNitro(osmos: OsmosApp) {
   const config: NitroConfig = {
@@ -22,11 +21,9 @@ export async function createNitro(osmos: OsmosApp) {
     workspaceDir: osmos.options.workspaceDir,
     compatibilityDate: "2024-12-07",
     buildDir: osmos.options.buildDir,
-    output: {
-      dir: osmos.options.buildDir,
-      serverDir: join(osmos.options.buildDir, "server"),
-      publicDir: join(osmos.options.buildDir, "client"),
-    },
+    imports: false,
+    scanDirs: [],
+    appConfigFiles: [],
     devHandlers: [],
     plugins: [
       fileURLToPath(new URL("./plugins/app-handler.js", import.meta.url)),

@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "osmos dev",
-    "vite": "vite"
+    "build": "osmos build",
+    "vite": "vite",
+    "start": "node .output/server/index.mjs"
   },
   "keywords": [],
   "author": "",

@@ -2,6 +2,7 @@ import { createError, eventHandler, fromNodeMiddleware } from "h3";
 import defineModule from "../../module/define";
 import invariant from "invariant";
 import { ViteDevServer } from "vite";
+import { join } from "path";
 
 export default defineModule({
   name: "osmos:client",
@@ -25,6 +26,14 @@ export default defineModule({
               status: 404,
             });
           }),
+        });
+      } else {
+        console.log(join(nitro.options.buildDir, "dist", "client", "assets"));
+        // @ts-expect-error
+        nitro.options.publicAssets.push({
+          dir: join(nitro.options.buildDir, "dist", "client", "assets"),
+          baseURL: "/_osmos/assets",
+          fallthrough: false,
         });
       }
     });

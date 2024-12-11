@@ -5,6 +5,8 @@
     "build": "turbo build",
     "dev": "turbo dev --filter=./packages/*",
     "playground": "turbo dev --filter=playground",
+    "playground:build": "turbo build --filter=playground",
+    "playground:start": "turbo start --filter=playground",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -16,5 +18,10 @@
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@kentcdodds/tmp-react-server-dom-esm": "patches/@kentcdodds__tmp-react-server-dom-esm.patch"
+    }
   }
 }

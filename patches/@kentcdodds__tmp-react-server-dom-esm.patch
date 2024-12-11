@@ -1,0 +1,26 @@
+diff --git a/cjs/react-server-dom-esm-client.node.development.js b/cjs/react-server-dom-esm-client.node.development.js
+index 0a7c73d6f18b6ee93977524123125ad4f6129724..1e011aa3d1b2c57b00d641a160c9ce30a45f62ba 100644
+--- a/cjs/react-server-dom-esm-client.node.development.js
++++ b/cjs/react-server-dom-esm-client.node.development.js
+@@ -107,7 +107,7 @@ function preloadModule(metadata) {
+     return existingPromise;
+   } else {
+     // $FlowFixMe[unsupported-syntax]
+-    var modulePromise = import(metadata.specifier);
++    var modulePromise = __import_client_ref(metadata.specifier);
+     modulePromise.then(function (value) {
+       var fulfilledThenable = modulePromise;
+       fulfilledThenable.status = 'fulfilled';
+diff --git a/cjs/react-server-dom-esm-client.node.production.js b/cjs/react-server-dom-esm-client.node.production.js
+index 4911056bf9e380ae51b44eafaf8ed97dbce0f21b..d197e3ea0581bae41c0d97e8f3d979827a67d4db 100644
+--- a/cjs/react-server-dom-esm-client.node.production.js
++++ b/cjs/react-server-dom-esm-client.node.production.js
+@@ -59,7 +59,7 @@ function preloadModule(metadata) {
+     return existingPromise;
+   } else {
+     // $FlowFixMe[unsupported-syntax]
+-    const modulePromise = import(metadata.specifier);
++    const modulePromise = __import_client_ref(metadata.specifier);
+     modulePromise.then(value => {
+       const fulfilledThenable = modulePromise;
+       fulfilledThenable.status = 'fulfilled';

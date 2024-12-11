@@ -5,15 +5,29 @@ import {
 } from "vite";
 import { transformSource } from "react-server-dom-esm/node-loader";
 import { ModuleRunner } from "vite/module-runner";
+import { createHash } from "crypto";
 
-export default function reactServer(): PluginOption {
+export type ReactServerOptions = {
+  outDir: string;
+  entry: string;
+};
+
+const clientReferences = new Map<string, string>();
+
+export default function reactServer(options: ReactServerOptions) {
+  return [test(options)];
+}
+
+function test(options: ReactServerOptions): PluginOption {
+  const clientReferencesId = "$osmos/client-references";
+  const $clientReferencesId = `\0${clientReferencesId}`;
+
   return {
     name: "osmos:react-server",
-    config() {
-      return {
-        environments: {
-          rsc: environment(),
-        },
+    config(config) {
+      config.environments = {
+        ...config.environments,
+        rsc: environment(options),
       };
     },
     async configureServer(server) {
@@ -22,28 +36,71 @@ export default function reactServer(): PluginOption {
 
       globalThis.__vite_rsc_runner = runner;
     },
+    resolveId(id) {
+      if (id === clientReferencesId) {
+        return $clientReferencesId;
+      }
+    },
+    load(id) {
+      if (id === $clientReferencesId) {
+        return [
+          `export default {`,
+          ...[...clientReferences.entries()].map(
+            ([id, runtimeId]) => `"${runtimeId}": () => import("${id}"),\n`,
+          ),
+          `}`,
+        ].join("\n");
+      }
+    },
     async transform(code, id) {
-      const isRSC = this.environment.name === "rsc";
+      if (this.environment.name === "rsc") {
+        const runtimeId = clientReferences.get(id) ?? id;
 
-      if (!isRSC) return;
+        const context = {
+          format: "module",
+          url: runtimeId,
+        };
 
-      const context = {
-        format: "module",
-        url: `/@fs${id}`,
-      };
+        let { source } = await transformSource(
+          code,
+          context,
+          (source: string) => ({ source }),
+        );
 
-      const { source } = await transformSource(
-        code,
-        context,
-        (source: string) => ({ source }),
-      );
+        if (source.length !== code.length) {
+          clientReferences.set(id, id);
+        }
 
-      return source;
+        if (__vite_rsc_manager.buildStep === "build") {
+          return source;
+        }
+      }
+    },
+    generateBundle(_, output) {
+      if (this.environment.name === "client") {
+        const moduleIds = [...clientReferences.keys()];
+
+        const references = Object.values(output).filter(
+          (c) =>
+            c.type === "chunk" &&
+            c.facadeModuleId &&
+            moduleIds.includes(c.facadeModuleId),
+        ) as any[];
+
+        for (const clientRef of references) {
+          clientReferences.set(
+            clientRef.facadeModuleId,
+            `/${clientRef.fileName}`,
+          );
+        }
+
+        console.log(clientReferences);
+      }
     },
   };
 }
 
-function environment(): EnvironmentOptions {
+function environment(options: ReactServerOptions): EnvironmentOptions {
   return {
     optimizeDeps: {
       include: [
@@ -60,15 +117,32 @@ function environment(): EnvironmentOptions {
       noExternal: true,
     },
     build: {
-      outDir: "dist/react-server",
-      sourcemap: true,
+      outDir: options.outDir,
+      sourcemap: false,
       ssr: true,
       emitAssets: true,
       manifest: true,
+      rollupOptions: {
+        input: {
+          index: options.entry,
+        },
+      },
     },
   };
 }
+export function hashString(v: string) {
+  return createHash("sha256").update(v).digest().toString("hex");
+}
+
+type PluginStateManager = {
+  buildStep: "build" | "scan";
+};
+
+globalThis.__vite_rsc_manager = {
+  buildStep: "scan",
+};
 
 declare global {
   var __vite_rsc_runner: ModuleRunner;
+  var __vite_rsc_manager: PluginStateManager;
 }
