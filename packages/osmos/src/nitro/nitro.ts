@@ -1,36 +1,51 @@
 import {
   createNitro as _createNitro,
   createDevServer,
-  Nitro,
   NitroConfig,
   NitroDevServer,
 } from "nitropack";
 import { createServer } from "vite";
 import { OsmosApp } from "../core/app";
 import { fileURLToPath } from "url";
+import defu from "defu";
 
 export async function createNitro(osmos: OsmosApp) {
-  const config: NitroConfig = {
-    framework: {
-      name: "osmos",
+  const config: NitroConfig = defu(
+    {
+      framework: {
+        name: "osmos",
+      },
+      dev: osmos.options.dev,
+      debug: osmos.options.debug,
+      rootDir: osmos.options.rootDir,
+      baseURL: osmos.options.app.baseURL,
+      workspaceDir: osmos.options.workspaceDir,
+      srcDir: osmos.options.serverDir,
+      compatibilityDate: "2024-12-07",
+      buildDir: osmos.options.buildDir,
+      imports: false,
+      scanDirs: [osmos.options.serverDir],
+      appConfigFiles: [],
+      handlers: [],
+      devHandlers: [],
+      routeRules: {},
+      experimental: {
+        tasks: true,
+      },
+      typescript: {
+        generateTsConfig: true,
+      },
+      plugins: [
+        fileURLToPath(new URL("./plugins/app-handler.js", import.meta.url)),
+      ],
     },
-    dev: osmos.options.dev,
-    debug: osmos.options.debug,
-    rootDir: osmos.options.rootDir,
-    baseURL: osmos.options.app.baseURL,
-    workspaceDir: osmos.options.workspaceDir,
-    compatibilityDate: "2024-12-07",
-    buildDir: osmos.options.buildDir,
-    imports: false,
-    scanDirs: [],
-    appConfigFiles: [],
-    devHandlers: [],
-    plugins: [
-      fileURLToPath(new URL("./plugins/app-handler.js", import.meta.url)),
-    ],
-  };
+    osmos.options.nitro,
+  );
+
+  await osmos.callHook("nitro:config", config);
 
   const nitro = await _createNitro(config);
+  nitro.logger = osmos.logger;
 
   await osmos.callHook("nitro:init", nitro);
 
@@ -38,10 +53,11 @@ export async function createNitro(osmos: OsmosApp) {
 }
 
 export async function createNitroDevServer(
-  nitro: Nitro,
+  osmos: OsmosApp,
 ): Promise<NitroDevServer> {
-  const nitroDevServer = createDevServer(nitro);
-  await installNitroPlugins(nitro.options.plugins, nitroDevServer);
+  osmos.logger.debug("Creating Nitro development server");
+  const nitroDevServer = createDevServer(osmos.nitro);
+  await installNitroPlugins(osmos.nitro.options.plugins, nitroDevServer);
   return nitroDevServer;
 }
 

@@ -7,7 +7,8 @@
     "dev": "osmos dev",
     "build": "osmos build",
     "vite": "vite",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "osmos": "osmos"
   },
   "keywords": [],
   "author": "",

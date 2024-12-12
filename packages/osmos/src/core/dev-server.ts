@@ -15,8 +15,9 @@ export type OsmosDevServer = {
 export async function createOsmosDevServer(
   osmos: OsmosApp,
 ): Promise<OsmosDevServer> {
+  osmos.logger.debug("Creating Osmos development server");
   const viteDevServer = await createViteDevServer(osmos);
-  const nitroDevServer = await createNitroDevServer(osmos.nitro);
+  const nitroDevServer = await createNitroDevServer(osmos);
 
   return {
     osmos,

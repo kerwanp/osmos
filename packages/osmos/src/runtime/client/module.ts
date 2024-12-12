@@ -1,10 +1,10 @@
 import { createError, eventHandler, fromNodeMiddleware } from "h3";
-import defineModule from "../../module/define";
+import { defineOsmosModule } from "../../module/define";
 import invariant from "invariant";
 import { ViteDevServer } from "vite";
 import { join } from "path";
 
-export default defineModule({
+export default defineOsmosModule({
   name: "osmos:client",
   setup(app) {
     let viteDev: ViteDevServer;
@@ -28,7 +28,6 @@ export default defineModule({
           }),
         });
       } else {
-        console.log(join(nitro.options.buildDir, "dist", "client", "assets"));
         // @ts-expect-error
         nitro.options.publicAssets.push({
           dir: join(nitro.options.buildDir, "dist", "client", "assets"),

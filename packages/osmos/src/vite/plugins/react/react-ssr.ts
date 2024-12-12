@@ -5,6 +5,7 @@ import {
   EnvironmentOptions,
   Manifest,
   PluginOption,
+  ViteDevServer,
 } from "vite";
 import { ModuleRunner } from "vite/module-runner";
 
@@ -17,6 +18,7 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
   const assetsId = "$osmos/ssr-assets";
   const $assetsId = `\0${assetsId}`;
 
+  let viteDevServer: ViteDevServer;
   return {
     name: "osmos:react-ssr",
     config() {
@@ -27,6 +29,7 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
       };
     },
     async configureServer(server) {
+      viteDevServer = server;
       const runner = createServerModuleRunner(server.environments.ssr);
       globalThis.__vite_ssr_runner = runner;
     },
@@ -42,15 +45,19 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
             join(options.outDir, "../", "client", ".vite", "manifest.json"),
           ).then((r) => JSON.parse(r.toString()));
 
+          const { head } = await getIndexHtmlTransform(viteDevServer);
           const entry = Object.values(content).find((r) => r.isEntry);
 
           const ssrAssets = {
+            head,
             bootstrapModules: [`/_osmos/${entry?.file}`],
           };
 
           return `export default ${JSON.stringify(ssrAssets)}`;
         } else {
+          const { head } = await getIndexHtmlTransform(viteDevServer);
           const ssrAssets = {
+            head,
             bootstrapModules: [`/_osmos/@id/__x00__$osmos/client/entry`],
           };
 
@@ -73,6 +80,16 @@ function environment(options: ReactSSROptions): EnvironmentOptions {
       },
     },
   };
+}
+
+async function getIndexHtmlTransform(server: ViteDevServer) {
+  const html = await server.transformIndexHtml(
+    "/",
+    "<html><head></head></html>",
+  );
+  const match = html.match(/<head>(.*)<\/head>/s)!;
+  const head = match[1];
+  return { head };
 }
 
 declare global {

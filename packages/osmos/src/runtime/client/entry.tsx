@@ -4,7 +4,9 @@ import { hydrateRoot } from "../../router/browser/dom";
 // @ts-expect-error
 import test from "$osmos/client-references";
 
-console.log(test);
+// WARN: This forces client references to be part of client bundle
+// TODO: Use proper method
+test;
 
 const getGlobalLocation = () =>
   window.location.pathname + window.location.search;

@@ -7,13 +7,14 @@ import { fileURLToPath } from "mlly";
 import { reactSSR } from "./plugins/react/react-ssr";
 import { join } from "pathe";
 import { reactClient } from "./plugins/react/react-client";
+import { serverCss } from "./plugins/react/server-css";
 
 export function createViteConfig(osmos: OsmosApp): InlineConfig {
   return {
     configFile: false,
     appType: "custom",
     base: "/_osmos",
-    root: process.cwd(),
+    root: osmos.options.rootDir,
     plugins: [
       baseReact(),
       reactServer({
@@ -35,6 +36,11 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
         ),
       }),
       router(osmos.router),
+      serverCss({
+        serverEntry: fileURLToPath(
+          new URL("../runtime/rsc/handler.js", import.meta.url),
+        ),
+      }),
     ],
     cacheDir: `${osmos.options.rootDir}/node_modules/.cache/osmos`, // TODO: Use specific cacheDir option
     server: {
@@ -58,12 +64,9 @@ export async function createViteDevServer(osmos: OsmosApp) {
 }
 
 export async function buildVite(osmos: OsmosApp) {
+  osmos.logger.debug("Building Vite Application");
   const config = createViteConfig(osmos);
   const builder = await createBuilder(config);
-
-  // __vite_rsc_manager.buildStep = "scan";
-  // await builder.build(builder.environments.rsc);
-  // await builder.build(builder.environments.ssr);
 
   __vite_rsc_manager.buildStep = "scan";
   await builder.build(builder.environments.rsc);

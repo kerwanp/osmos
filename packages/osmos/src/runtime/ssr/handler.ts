@@ -2,10 +2,9 @@ import { setHeader, eventHandler } from "h3";
 
 import ReactServerDOM from "react-server-dom-esm/client";
 
-import { PassThrough } from "stream";
+import { PassThrough, pipeline, Writable } from "node:stream";
 import ReactDOM from "react-dom/server";
 import { fileURLToPath } from "mlly";
-import { join } from "pathe";
 
 async function importRSC() {
   let mod: typeof import("../rsc/handler");
@@ -34,7 +33,6 @@ async function importClientReference(id: string) {
     return import(/* @vite-ignore */ id);
   } else {
     const clientReferences = await import("$osmos/client-references" as string);
-    console.log(clientReferences, id);
     const dynImport = clientReferences.default[id];
     return dynImport();
   }
@@ -56,9 +54,8 @@ export default eventHandler(async (event) => {
   // @ts-ignore
   const assets = await import("$osmos/ssr-assets").then((r) => r.default);
 
-  const stream = await new Promise(async (resolve) => {
+  const stream = await new Promise<ReactDOM.PipeableStream>(async (resolve) => {
     const stream = ReactDOM.renderToPipeableStream(element, {
-      bootstrapScriptContent: `window.__vite_plugin_react_preamble_installed__ = true`,
       bootstrapModules: assets.bootstrapModules,
       onShellReady() {
         resolve(stream);
@@ -68,5 +65,34 @@ export default eventHandler(async (event) => {
 
   setHeader(event, "content-type", "text/html");
 
-  return stream;
+  return stream.pipe(injectToHead(assets.head));
 });
+
+function injectToHead(data: string) {
+  const marker = "<head>";
+  let done = false;
+
+  return new PassThrough({
+    transform(chunk, _encoding, callback) {
+      if (!done && chunk.includes(marker)) {
+        const [pre, post] = splitFirst(chunk, marker);
+        done = true;
+        callback(null, pre + marker + data + post);
+        return;
+      }
+
+      callback(null, chunk);
+    },
+  });
+}
+
+/**
+ * @see https://github.com/hi-ogawa/js-utils/blob/6439b56a2442415929285634742106c87ba90697/packages/utils/src/lodash.ts#L138
+ */
+function splitFirst(s: string, sep: string): [string, string] {
+  let i = s.indexOf(sep);
+  if (i === -1) {
+    i = s.length;
+  }
+  return [s.slice(0, i), s.slice(i + sep.length)];
+}

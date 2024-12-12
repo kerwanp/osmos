@@ -12,6 +12,9 @@ export async function loadOsmosConfig(
     name: "osmos",
     dotenv: true,
     globalRc: true,
+    defaults: {
+      rootDir: options.cwd,
+    },
     ...options,
   });
 

@@ -1,11 +1,9 @@
 {
-  "app": {
-    "baseURL": "/"
-  },
   "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
   "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
   "workspaceDir": "/home/martin/workspace/random/osmos",
   "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+  "serverDir": "/home/martin/workspace/random/osmos/packages/osmos/server",
   "modules": [],
   "extensions": [
     "js",
@@ -16,5 +14,13 @@
   "dev": false,
   "test": false,
   "debug": false,
-  "logLevel": 3
+  "logLevel": 3,
+  "app": {
+    "baseURL": "/"
+  },
+  "css": [],
+  "routeRules": {},
+  "nitro": {
+    "routeRules": {}
+  }
 }

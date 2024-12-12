@@ -5,4 +5,5 @@ import { Consola } from "consola";
 export type ModuleDefinition = {
   name: string;
   setup(app: OsmosApp, logger: Consola): Promisable<void>;
+  configure?(app: OsmosApp, logger: Consola): Promisable<void>;
 };

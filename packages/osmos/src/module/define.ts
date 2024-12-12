@@ -1,5 +1,5 @@
 import { ModuleDefinition } from "./types";
 
-export default function defineModule(definition: ModuleDefinition) {
+export function defineOsmosModule(definition: ModuleDefinition) {
   return definition;
 }

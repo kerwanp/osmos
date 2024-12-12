@@ -7,6 +7,7 @@ export default defineConfig({
     index: "src/index.ts",
     "cli/index": "src/cli/index.ts",
     "config/index": "src/config/index.ts",
+    "module/index": "src/module/index.ts",
     "runtime/rsc/handler": "src/runtime/rsc/handler.tsx",
     "runtime/ssr/handler": "src/runtime/ssr/handler.ts",
     "runtime/client/entry": "src/runtime/client/entry.tsx",
@@ -24,5 +25,4 @@ export default defineConfig({
     typescript(),
     preserveDirectives({ suppressPreserveModulesWarning: true }),
   ],
-  external: ["citty", "vite", "react-server-dom-esm/server"],
 });

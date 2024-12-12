@@ -1,9 +1,9 @@
 {
+  "extends": "./.osmos/types/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
     "strict": true,
     "allowJs": true,
-    "jsx": "react-jsx",
     "target": "ESNext",
     "module": "Preserve",
     "moduleResolution": "bundler",

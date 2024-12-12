@@ -1,0 +1,38 @@
+{
+  "name": "@osmos/tailwindcss",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "prepare": "osmos kit prepare",
+    "dev": "osmos dev --cwd playground",
+    "configure": "osmos configure @osmos/tailwindcss --cwd playground"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "default": "./dist/module.mjs"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "h3": "npm:h3-nightly@latest",
+    "osmos": "workspace:*",
+    "pathe": "^1.1.2",
+    "postcss": "^8.4.49",
+    "tailwind-config-viewer": "^2.0.4",
+    "tailwindcss": "^3.4.16",
+    "ufo": "^1.5.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rollup": "^4.28.1"
+  }
+}

@@ -2,14 +2,22 @@ import { defineCommand } from "citty";
 import { createOsmos } from "../../core/app";
 import { loadOsmosConfig } from "../../config/loader";
 import { createOsmosDevServer } from "../../core/dev-server";
+import { prepareOsmos } from "../../core/prepare";
+import { cwdArgs } from "./_shared";
+import { resolve } from "pathe";
 
 export default defineCommand({
   meta: {
     name: "dev",
   },
-  async run() {
+  args: {
+    ...cwdArgs,
+  },
+  async run({ args }) {
+    console.log(args);
+    console.log(resolve(args.cwd));
     const config = await loadOsmosConfig({
-      cwd: process.cwd(),
+      cwd: resolve(args.cwd),
       overrides: {
         dev: true,
       },
@@ -18,6 +26,8 @@ export default defineCommand({
     const osmos = await createOsmos(config);
 
     await osmos.init();
+
+    await prepareOsmos(osmos);
 
     const devServer = await createOsmosDevServer(osmos);
 

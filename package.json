@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev --filter=./packages/*",
+    "prepare": "turbo prepare",
+    "dev": "turbo dev --filter=./packages/**/*",
     "playground": "turbo dev --filter=playground",
     "playground:build": "turbo build --filter=playground",
     "playground:start": "turbo start --filter=playground",
+    "osmos": "pnpm run --filter=playground osmos",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

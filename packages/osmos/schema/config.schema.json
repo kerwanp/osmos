@@ -1,20 +1,6 @@
 {
   "id": "#",
   "properties": {
-    "app": {
-      "id": "#app",
-      "properties": {
-        "baseURL": {
-          "id": "#app/baseURL",
-          "default": "/",
-          "type": "string"
-        }
-      },
-      "default": {
-        "baseURL": "/"
-      },
-      "type": "object"
-    },
     "rootDir": {
       "id": "#rootDir",
       "default": "/home/martin/workspace/random/osmos/packages/osmos",
@@ -33,6 +19,11 @@
     "buildDir": {
       "id": "#buildDir",
       "default": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+      "type": "string"
+    },
+    "serverDir": {
+      "id": "#serverDir",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos/server",
       "type": "string"
     },
     "modules": {
@@ -75,16 +66,70 @@
       "id": "#logLevel",
       "default": 3,
       "type": "number"
+    },
+    "app": {
+      "id": "#app",
+      "properties": {
+        "baseURL": {
+          "id": "#app/baseURL",
+          "default": "/",
+          "type": "string"
+        }
+      },
+      "default": {
+        "baseURL": "/"
+      },
+      "type": "object"
+    },
+    "css": {
+      "id": "#css",
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "any"
+      }
+    },
+    "nitro": {
+      "title": "Configuration for Nitro.",
+      "description": "",
+      "tags": [
+        "@see [Nitro configuration docs](https://nitro.unjs.io/config/)"
+      ],
+      "tsType": "typeof import('nitropack/types')['NitroConfig']",
+      "markdownType": "NitropackTypesNitroConfig",
+      "id": "#nitro",
+      "properties": {
+        "routeRules": {
+          "id": "#nitro/routeRules",
+          "default": {},
+          "type": "object"
+        }
+      },
+      "default": {
+        "routeRules": {}
+      },
+      "type": "object"
+    },
+    "routeRules": {
+      "title": "Global route options applied to matching server routes.",
+      "description": "",
+      "tags": [
+        "@experimental This is an experimental feature and API may change in the future.",
+        "@see [Nitro route rules documentation](https://nitro.unjs.io/config/#routerules)"
+      ],
+      "tsType": "typeof import('nitropack/types')['NitroConfig']['routeRules']",
+      "markdownType": "NitropackTypesNitroConfig['routeRules']",
+      "id": "#routeRules",
+      "default": {},
+      "type": "any"
     }
   },
   "default": {
-    "app": {
-      "baseURL": "/"
-    },
     "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
     "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
     "workspaceDir": "/home/martin/workspace/random/osmos",
     "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
+    "serverDir": "/home/martin/workspace/random/osmos/packages/osmos/server",
     "modules": [],
     "extensions": [
       "js",
@@ -95,7 +140,15 @@
     "dev": false,
     "test": false,
     "debug": false,
-    "logLevel": 3
+    "logLevel": 3,
+    "app": {
+      "baseURL": "/"
+    },
+    "css": [],
+    "nitro": {
+      "routeRules": {}
+    },
+    "routeRules": {}
   },
   "type": "object"
 }

@@ -96,8 +96,6 @@ function test(options: ReactServerOptions): PluginOption {
             `/${clientRef.fileName}`,
           );
         }
-
-        console.log(clientReferences);
       }
     },
   };

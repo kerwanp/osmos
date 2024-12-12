@@ -1,9 +1,9 @@
 import { fileURLToPath } from "mlly";
-import defineModule from "../../module/define";
+import { defineOsmosModule } from "../../module/define";
 import { eventHandler } from "h3";
 import { join } from "pathe";
 
-export default defineModule({
+export default defineOsmosModule({
   name: "osmos:rsc",
   setup(app) {
     if (app.options.dev) {

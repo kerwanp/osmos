@@ -2,6 +2,7 @@ import { defineCommand } from "citty";
 import { createOsmos } from "../../core/app";
 import { loadOsmosConfig } from "../../config/loader";
 import { buildOsmos } from "../../core/build";
+import { prepareOsmos } from "../../core/prepare";
 
 export default defineCommand({
   meta: {
@@ -16,6 +17,7 @@ export default defineCommand({
 
     await osmos.init();
 
+    await prepareOsmos(osmos);
     await buildOsmos(osmos);
   },
 });

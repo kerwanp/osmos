@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "pnpm build:schema && rollup -c rollup.config.js --watch",
+    "prepare": "unbuild --stub",
+    "dev-old": "pnpm build:schema && rollup -c rollup.config.js --watch",
     "build": "pnpm build:schema && rollup -c rollup.config.js",
     "build:schema": "unbuild"
   },
@@ -12,9 +13,22 @@
     "osmos": "./bin/osmos.mjs"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./config": "./dist/config/index.js",
-    "./link": "./dist/router/browser/link.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "default": "./dist/config/index.mjs"
+    },
+    "./module": {
+      "types": "./dist/module/index.d.ts",
+      "default": "./dist/module/index.mjs"
+    },
+    "./link": {
+      "types": "./dist/router/browser/link.d.ts",
+      "default": "./dist/router/browser/link.mjs"
+    }
   },
   "keywords": [],
   "author": "",
@@ -28,11 +42,11 @@
     "es-module-lexer": "^1.5.4",
     "esbuild": "^0.24.0",
     "fast-glob": "^3.3.2",
-    "h3": "^1.13.0",
+    "h3": "npm:h3-nightly@latest",
     "hookable": "^5.5.3",
     "invariant": "^2.2.4",
     "mlly": "^1.7.3",
-    "nitropack": "^2.10.4",
+    "nitropack": "npm:nitropack-nightly@latest",
     "pathe": "^1.1.2",
     "pkg-types": "^1.2.1",
     "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",

@@ -42,8 +42,9 @@ export function reactClient(options: ReactClientOptions): PluginOption {
       }
     },
     async load(id) {
-      if (id === entryResolvedId) {
+      if (id === entryResolvedId && this.environment.name === "client") {
         return `
+          import "virtual:server-css"
           for (let i = 0; !window.__vite_plugin_react_preamble_installed__; i++) {
             await new Promise(resolve => setTimeout(resolve, 10 * (2 ** i)));
           }

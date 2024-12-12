@@ -1,9 +1,9 @@
 import { fileURLToPath } from "mlly";
-import defineModule from "../../module/define";
+import { defineOsmosModule } from "../../module/define";
 import { eventHandler } from "h3";
 import { join } from "pathe";
 
-export default defineModule({
+export default defineOsmosModule({
   name: "osmos:ssr",
   setup(app) {
     if (app.options.dev) {
@@ -21,6 +21,7 @@ export default defineModule({
     } else {
       app.hook("nitro:init", async (nitro) => {
         nitro.options.handlers.push({
+          route: "/**",
           handler: join(nitro.options.buildDir, "dist", "ssr", "index.js"),
         });
       });

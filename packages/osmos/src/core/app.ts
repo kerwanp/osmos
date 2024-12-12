@@ -1,6 +1,6 @@
 import { createDebugger, Hookable } from "hookable";
 import { createNitro } from "../nitro/nitro";
-import { Nitro } from "nitropack/types";
+import { Nitro, NitroConfig } from "nitropack/types";
 import invariant from "invariant";
 import { OsmosOptions } from "../config/types";
 import consola, { ConsolaInstance } from "consola";
@@ -13,6 +13,7 @@ import {
 } from "../router/file-system/router";
 
 export type OsmosHooks = {
+  "nitro:config": (config: NitroConfig) => Promisable<void>;
   "nitro:init": (nitro: Nitro) => Promisable<void>;
   "vite:dev:init": (vite: ViteDevServer) => Promisable<void>;
 };
@@ -40,9 +41,13 @@ export class OsmosApp extends Hookable<OsmosHooks> {
     if (this.options.logLevel) {
       this.logger.level = this.options.logLevel;
     }
+
+    this.logger.debug("Creating Osmos App");
   }
 
   async init() {
+    this.logger.debug("Initializing Osmos App");
+
     await installModules(this);
     this.#nitro = await createNitro(this);
   }

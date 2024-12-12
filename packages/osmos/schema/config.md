@@ -1,12 +1,5 @@
  
 
-# `app`
-
-## `baseURL`
-- **Type**: `string`
-- **Default**: `"/"`
-
-
 # `rootDir`
 - **Type**: `string`
 - **Default**: `"/home/martin/workspace/random/osmos/packages/osmos"`
@@ -25,6 +18,11 @@
 # `buildDir`
 - **Type**: `string`
 - **Default**: `"/home/martin/workspace/random/osmos/packages/osmos/.osmos"`
+
+
+# `serverDir`
+- **Type**: `string`
+- **Default**: `"/home/martin/workspace/random/osmos/packages/osmos/server"`
 
 
 # `modules`
@@ -55,3 +53,26 @@
 # `logLevel`
 - **Type**: `number`
 - **Default**: `3`
+
+
+# `app`
+
+## `baseURL`
+- **Type**: `string`
+- **Default**: `"/"`
+
+
+# `css`
+- **Type**: `array`
+- **Default**: `[]`
+
+
+# `nitro`
+
+## `routeRules`
+
+# `routeRules`
+- **Type**: `NitropackTypesNitroConfig['routeRules']`
+- **Default**: `{}`
+
+> Global route options applied to matching server routes.
