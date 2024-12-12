@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "prepare": "turbo prepare",
-    "dev": "turbo dev --filter=./packages/**/*",
+    "dev": "turbo dev --filter=./packages/*",
     "playground": "turbo dev --filter=playground",
     "playground:build": "turbo build --filter=playground",
     "playground:start": "turbo start --filter=playground",

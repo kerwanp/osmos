@@ -4,8 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepare": "unbuild --stub",
-    "dev-old": "pnpm build:schema && rollup -c rollup.config.js --watch",
+    "dev": "pnpm build:schema && rollup -c rollup.config.js --watch",
     "build": "pnpm build:schema && rollup -c rollup.config.js",
     "build:schema": "unbuild"
   },
@@ -13,22 +12,10 @@
     "osmos": "./bin/osmos.mjs"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.mjs"
-    },
-    "./config": {
-      "types": "./dist/config/index.d.ts",
-      "default": "./dist/config/index.mjs"
-    },
-    "./module": {
-      "types": "./dist/module/index.d.ts",
-      "default": "./dist/module/index.mjs"
-    },
-    "./link": {
-      "types": "./dist/router/browser/link.d.ts",
-      "default": "./dist/router/browser/link.mjs"
-    }
+    ".": "./dist/index.js",
+    "./config": "./dist/config/index.js",
+    "./module": "./dist/module/index.js",
+    "./link": "./dist/router/browser/link.js"
   },
   "keywords": [],
   "author": "",

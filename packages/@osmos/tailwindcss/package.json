@@ -4,8 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepare": "osmos kit prepare",
-    "dev": "osmos dev --cwd playground",
+    "dev": "osmos kit prepare",
+    "play": "osmos dev --cwd playground",
     "configure": "osmos configure @osmos/tailwindcss --cwd playground"
   },
   "exports": {

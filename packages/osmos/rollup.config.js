@@ -8,6 +8,7 @@ export default defineConfig({
     "cli/index": "src/cli/index.ts",
     "config/index": "src/config/index.ts",
     "module/index": "src/module/index.ts",
+    "nitro/renderer": "src/nitro/renderer.ts",
     "runtime/rsc/handler": "src/runtime/rsc/handler.tsx",
     "runtime/ssr/handler": "src/runtime/ssr/handler.ts",
     "runtime/client/entry": "src/runtime/client/entry.tsx",

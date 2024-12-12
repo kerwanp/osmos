@@ -41,15 +41,21 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
     async load(id) {
       if (id === $assetsId) {
         if (this.environment.mode === "build") {
-          const content: Manifest = await readFile(
+          const clientManifest: Manifest = await readFile(
             join(options.outDir, "../", "client", ".vite", "manifest.json"),
           ).then((r) => JSON.parse(r.toString()));
 
-          const { head } = await getIndexHtmlTransform(viteDevServer);
-          const entry = Object.values(content).find((r) => r.isEntry);
+          // const serverManifest: Manifest = await readFile(
+          //   join(options.outDir, "../", "server", ".vite", "manifest.json"),
+          // ).then((r) => JSON.parse(r.toString()));
+
+          // console.log(serverManifest);
+
+          // const { head } = await getIndexHtmlTransform(viteDevServer);
+          const entry = Object.values(clientManifest).find((r) => r.isEntry);
 
           const ssrAssets = {
-            head,
+            head: "",
             bootstrapModules: [`/_osmos/${entry?.file}`],
           };
 
@@ -73,6 +79,7 @@ function environment(options: ReactSSROptions): EnvironmentOptions {
     build: {
       manifest: true,
       outDir: options.outDir,
+      target: "esnext",
       rollupOptions: {
         input: {
           index: options.entry,

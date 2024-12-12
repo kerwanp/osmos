@@ -8,6 +8,7 @@ import { reactSSR } from "./plugins/react/react-ssr";
 import { join } from "pathe";
 import { reactClient } from "./plugins/react/react-client";
 import { serverCss } from "./plugins/react/server-css";
+import { nitro } from "./plugins/nitro";
 
 export function createViteConfig(osmos: OsmosApp): InlineConfig {
   return {
@@ -17,6 +18,7 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
     root: osmos.options.rootDir,
     plugins: [
       baseReact(),
+      nitro(osmos.nitro),
       reactServer({
         outDir: join(osmos.options.buildDir, "dist", "react-server"),
         entry: fileURLToPath(
@@ -47,6 +49,19 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
       middlewareMode: true,
       fs: {
         allow: [osmos.options.workspaceDir],
+      },
+    },
+    environments: {
+      ssr: {
+        build: {
+          rollupOptions: {
+            input: {
+              renderer: fileURLToPath(
+                new URL("../nitro/renderer.js", import.meta.url),
+              ),
+            },
+          },
+        },
       },
     },
   };

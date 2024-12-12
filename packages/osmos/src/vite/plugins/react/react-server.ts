@@ -112,6 +112,9 @@ function environment(options: ReactServerOptions): EnvironmentOptions {
         "osmos > react-server-dom-esm/server",
         "osmos > react-server-dom-esm/server.node",
       ],
+      esbuildOptions: {
+        target: "esnext",
+      },
     },
     resolve: {
       conditions: ["module", "react-server"],
@@ -123,6 +126,7 @@ function environment(options: ReactServerOptions): EnvironmentOptions {
       ssr: true,
       emitAssets: true,
       manifest: true,
+      target: "esnext",
       rollupOptions: {
         input: {
           index: options.entry,

@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@kentcdodds/tmp-react-server-dom-esm':
+    hash: ip72kpyijci4rxho3uhffjkzjm
+    path: patches/@kentcdodds__tmp-react-server-dom-esm.patch
+
 importers:
 
   .:
@@ -63,16 +68,6 @@ importers:
       rollup:
         specifier: ^4.28.1
         version: 4.28.1
-
-  packages/@osmos/tailwindcss/playground:
-    dependencies:
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-    devDependencies:
-      '@types/node':
-        specifier: ^22.10.1
-        version: 22.10.1
 
   packages/eslint-config:
     devDependencies:

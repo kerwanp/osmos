@@ -1,3 +1,5 @@
+import "./global.css";
+
 import { ReactNode } from "react";
 import ClientComponent from "./ClientComponent";
 import ServerComponent from "./ServerComponent";

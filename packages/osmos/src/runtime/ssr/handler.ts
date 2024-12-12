@@ -2,9 +2,12 @@ import { setHeader, eventHandler } from "h3";
 
 import ReactServerDOM from "react-server-dom-esm/client";
 
-import { PassThrough, pipeline, Writable } from "node:stream";
+import { PassThrough } from "node:stream";
 import ReactDOM from "react-dom/server";
 import { fileURLToPath } from "mlly";
+// @ts-expect-error
+import nitroConfig from "$osmos/nitro";
+import { join } from "pathe";
 
 async function importRSC() {
   let mod: typeof import("../rsc/handler");
@@ -16,12 +19,7 @@ async function importRSC() {
   } else {
     // TODO: That's not great
     mod = import(
-      fileURLToPath(
-        new URL(
-          "../../.osmos/dist/react-server/index.js" as string /* @vite-ignore */,
-          import.meta.url,
-        ),
-      )
+      join(nitroConfig.buildDir, "dist/react-server/index.js")
     ) as any;
   }
 
