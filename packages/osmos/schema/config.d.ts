@@ -4,6 +4,9 @@ export interface ConfigSchema {
  rootDir: string,
 
  /** @default "/home/martin/workspace/random/osmos/packages/osmos/src" */
+ srcDir: string,
+
+ /** @default "/home/martin/workspace/random/osmos/packages/osmos/src/app" */
  appDir: string,
 
  /** @default "/home/martin/workspace/random/osmos" */
@@ -56,4 +59,9 @@ export interface ConfigSchema {
   * @see [Nitro route rules documentation](https://nitro.unjs.io/config/#routerules)
  */
  routeRules: NitroConfig['routeRules'],
+
+ postcss: {
+  /** @default ["autoprefixer"] */
+  plugins: Array<string>,
+ },
 }

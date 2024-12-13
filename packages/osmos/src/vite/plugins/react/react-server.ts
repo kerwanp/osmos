@@ -1,5 +1,6 @@
 import {
   createServerModuleRunner,
+  DevEnvironment,
   EnvironmentOptions,
   PluginOption,
 } from "vite";
@@ -67,13 +68,17 @@ function test(options: ReactServerOptions): PluginOption {
           (source: string) => ({ source }),
         );
 
-        if (source.length !== code.length) {
+        if (
+          __vite_rsc_manager.buildStep === "scan" &&
+          source.length !== code.length
+        ) {
           clientReferences.set(id, id);
         }
 
         if (
           this.environment.mode === "dev" ||
-          __vite_rsc_manager.buildStep === "build"
+          (__vite_rsc_manager.buildStep === "build" &&
+            source.length !== code.length)
         ) {
           return source;
         }
@@ -105,7 +110,6 @@ function environment(options: ReactServerOptions): EnvironmentOptions {
   return {
     optimizeDeps: {
       include: [
-        "osmos",
         "react",
         "react/jsx-runtime",
         "react/jsx-dev-runtime",

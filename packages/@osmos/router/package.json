@@ -1,0 +1,48 @@
+{
+  "name": "@osmos/router",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "prepack": "unbuild",
+    "build": "unbuild"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./fs": {
+      "types": "./dist/fs/index.d.ts",
+      "default": "./dist/fs/index.mjs"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "default": "./dist/server/index.mjs"
+    },
+    "./virtual": "./src/virtual.d.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "consola": "^3.2.3",
+    "es-module-lexer": "^1.5.4",
+    "esbuild": "^0.24.0",
+    "fast-glob": "^3.3.2",
+    "globby": "^14.0.2",
+    "micromatch": "^4.0.8",
+    "vite": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "unbuild": "3.0.0-rc.11"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

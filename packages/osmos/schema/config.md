@@ -5,9 +5,14 @@
 - **Default**: `"/home/martin/workspace/random/osmos/packages/osmos"`
 
 
-# `appDir`
+# `srcDir`
 - **Type**: `string`
 - **Default**: `"/home/martin/workspace/random/osmos/packages/osmos/src"`
+
+
+# `appDir`
+- **Type**: `string`
+- **Default**: `"/home/martin/workspace/random/osmos/packages/osmos/src/app"`
 
 
 # `workspaceDir`
@@ -76,3 +81,10 @@
 - **Default**: `{}`
 
 > Global route options applied to matching server routes.
+
+
+# `postcss`
+
+## `plugins`
+- **Type**: `array`
+- **Default**: `["autoprefixer"]`

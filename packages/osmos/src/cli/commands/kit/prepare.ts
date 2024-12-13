@@ -18,6 +18,11 @@ export default defineCommand({
         emitCJS: false,
         cjsBridge: true,
       },
+      stubOptions: {
+        jiti: {
+          interopDefault: false,
+        },
+      },
       externals: ["osmos"],
     });
   },

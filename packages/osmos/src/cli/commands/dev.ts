@@ -14,8 +14,6 @@ export default defineCommand({
     ...cwdArgs,
   },
   async run({ args }) {
-    console.log(args);
-    console.log(resolve(args.cwd));
     const config = await loadOsmosConfig({
       cwd: resolve(args.cwd),
       overrides: {

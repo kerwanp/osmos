@@ -3,16 +3,19 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "prepare": "turbo prepare",
+    "prepack": "turbo prepack",
     "dev": "turbo dev --filter=./packages/*",
     "playground": "turbo dev --filter=playground",
     "playground:build": "turbo build --filter=playground",
     "playground:start": "turbo start --filter=playground",
     "osmos": "pnpm run --filter=playground osmos",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo test"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@manypkg/cli": "^0.23.0",
     "prettier": "^3.2.5",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"

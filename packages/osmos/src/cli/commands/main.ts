@@ -5,6 +5,7 @@ import task from "./task";
 import prepare from "./prepare";
 import kit from "./kit";
 import configure from "./configure";
+import start from "./start";
 
 export default defineCommand({
   meta: {
@@ -17,5 +18,6 @@ export default defineCommand({
     prepare,
     kit,
     configure,
+    start,
   },
 });

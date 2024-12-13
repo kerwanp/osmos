@@ -8,7 +8,7 @@ export default defineUntypedSchema({
     $resolve: (val) => (typeof val === "string" ? resolve(val) : process.cwd()),
   },
 
-  appDir: {
+  srcDir: {
     $resolve: async (val: string | undefined, get): Promise<string> => {
       const rootDir = (await get("rootDir")) as string;
       if (val) {
@@ -16,6 +16,17 @@ export default defineUntypedSchema({
       }
 
       return resolve(rootDir, "src");
+    },
+  },
+
+  appDir: {
+    $resolve: async (val: string | undefined, get): Promise<string> => {
+      const srcDir = (await get("srcDir")) as string;
+      if (val) {
+        return resolve(srcDir, val);
+      }
+
+      return resolve(srcDir, "app");
     },
   },
 

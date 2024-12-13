@@ -6,9 +6,14 @@
       "default": "/home/martin/workspace/random/osmos/packages/osmos",
       "type": "string"
     },
+    "srcDir": {
+      "id": "#srcDir",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos/src",
+      "type": "string"
+    },
     "appDir": {
       "id": "#appDir",
-      "default": "/home/martin/workspace/random/osmos/packages/osmos/src",
+      "default": "/home/martin/workspace/random/osmos/packages/osmos/src/app",
       "type": "string"
     },
     "workspaceDir": {
@@ -122,11 +127,33 @@
       "id": "#routeRules",
       "default": {},
       "type": "any"
+    },
+    "postcss": {
+      "id": "#postcss",
+      "properties": {
+        "plugins": {
+          "id": "#postcss/plugins",
+          "default": [
+            "autoprefixer"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "default": {
+        "plugins": [
+          "autoprefixer"
+        ]
+      },
+      "type": "object"
     }
   },
   "default": {
     "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
-    "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+    "srcDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+    "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src/app",
     "workspaceDir": "/home/martin/workspace/random/osmos",
     "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
     "serverDir": "/home/martin/workspace/random/osmos/packages/osmos/server",
@@ -148,7 +175,12 @@
     "nitro": {
       "routeRules": {}
     },
-    "routeRules": {}
+    "routeRules": {},
+    "postcss": {
+      "plugins": [
+        "autoprefixer"
+      ]
+    }
   },
   "type": "object"
 }

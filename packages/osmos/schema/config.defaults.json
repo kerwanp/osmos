@@ -1,6 +1,7 @@
 {
   "rootDir": "/home/martin/workspace/random/osmos/packages/osmos",
-  "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+  "srcDir": "/home/martin/workspace/random/osmos/packages/osmos/src",
+  "appDir": "/home/martin/workspace/random/osmos/packages/osmos/src/app",
   "workspaceDir": "/home/martin/workspace/random/osmos",
   "buildDir": "/home/martin/workspace/random/osmos/packages/osmos/.osmos",
   "serverDir": "/home/martin/workspace/random/osmos/packages/osmos/server",
@@ -22,5 +23,10 @@
   "routeRules": {},
   "nitro": {
     "routeRules": {}
+  },
+  "postcss": {
+    "plugins": [
+      "autoprefixer"
+    ]
   }
 }

@@ -1,7 +1,6 @@
-import { build, createBuilder, createServer, InlineConfig } from "vite";
+import { createBuilder, createServer, InlineConfig } from "vite";
 import { OsmosApp } from "../core/app";
 import baseReact from "@vitejs/plugin-react";
-import router from "./plugins/router";
 import reactServer from "./plugins/react/react-server";
 import { fileURLToPath } from "mlly";
 import { reactSSR } from "./plugins/react/react-ssr";
@@ -9,6 +8,8 @@ import { join } from "pathe";
 import { reactClient } from "./plugins/react/react-client";
 import { serverCss } from "./plugins/react/server-css";
 import { nitro } from "./plugins/nitro";
+import { fileSystemRouter } from "@osmos/router/fs";
+import postcss from "./plugins/postcss";
 
 export function createViteConfig(osmos: OsmosApp): InlineConfig {
   return {
@@ -17,30 +18,37 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
     base: "/_osmos",
     root: osmos.options.rootDir,
     plugins: [
+      fileSystemRouter({
+        dir: osmos.options.appDir,
+        extensions: osmos.options.extensions,
+        files: ["page", "layout"],
+      }),
+      postcss({
+        plugins: osmos.options.postcss.plugins,
+      }),
       baseReact(),
       nitro(osmos.nitro),
       reactServer({
-        outDir: join(osmos.options.buildDir, "dist", "react-server"),
+        outDir: join(osmos.options.buildDir, "dist", "server"),
         entry: fileURLToPath(
-          new URL("../runtime/rsc/handler.js", import.meta.url),
+          new URL("../server/runtime/handler", import.meta.url),
         ),
       }),
       reactSSR({
         outDir: join(osmos.options.buildDir, "dist", "ssr"),
         entry: fileURLToPath(
-          new URL("../runtime/ssr/handler.js", import.meta.url),
+          new URL("../ssr/runtime/handler", import.meta.url),
         ),
       }),
       reactClient({
         outDir: join(osmos.options.buildDir, "dist", "client"),
         entry: fileURLToPath(
-          new URL("../runtime/client/entry.js", import.meta.url),
+          new URL("../client/runtime/entry", import.meta.url),
         ),
       }),
-      router(osmos.router),
       serverCss({
         serverEntry: fileURLToPath(
-          new URL("../runtime/rsc/handler.js", import.meta.url),
+          new URL("../server/runtime/handler", import.meta.url),
         ),
       }),
     ],
@@ -57,7 +65,7 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           rollupOptions: {
             input: {
               renderer: fileURLToPath(
-                new URL("../nitro/renderer.js", import.meta.url),
+                new URL("../nitro/runtime/renderer", import.meta.url),
               ),
             },
           },
@@ -85,11 +93,10 @@ export async function buildVite(osmos: OsmosApp) {
 
   __vite_rsc_manager.buildStep = "scan";
   await builder.build(builder.environments.rsc);
+
   await builder.build(builder.environments.client);
   await builder.build(builder.environments.ssr);
 
   __vite_rsc_manager.buildStep = "build";
   await builder.build(builder.environments.rsc);
-
-  return build(config);
 }

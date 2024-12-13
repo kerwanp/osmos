@@ -20,8 +20,8 @@
     "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1"
   },
   "devDependencies": {
-    "vite": "^6.0.3",
     "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2"
+    "@types/react-dom": "^19.0.2",
+    "vite": "^6.0.3"
   }
 }

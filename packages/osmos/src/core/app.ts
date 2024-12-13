@@ -7,10 +7,6 @@ import consola, { ConsolaInstance } from "consola";
 import { Promisable } from "../types";
 import { installModules } from "../module/install";
 import { ViteDevServer } from "vite";
-import {
-  createFileSystemRouter,
-  FileSystemRouter,
-} from "../router/file-system/router";
 
 export type OsmosHooks = {
   "nitro:config": (config: NitroConfig) => Promisable<void>;
@@ -23,16 +19,11 @@ export class OsmosApp extends Hookable<OsmosHooks> {
 
   options: OsmosOptions;
   logger: ConsolaInstance;
-  router: FileSystemRouter;
 
   constructor(options: OsmosOptions) {
     super();
     this.options = options;
     this.logger = consola.withTag("osmos");
-    this.router = createFileSystemRouter({
-      dir: options.appDir,
-      extensions: options.extensions,
-    });
 
     if (this.options.debug) {
       createDebugger(this, { tag: "osmos" });
@@ -60,9 +51,9 @@ export class OsmosApp extends Hookable<OsmosHooks> {
 
 export async function createOsmos(options: OsmosOptions) {
   options.modules.unshift(
-    await import("../runtime/client/module").then((r) => r.default),
-    await import("../runtime/rsc/module").then((r) => r.default),
-    await import("../runtime/ssr/module").then((r) => r.default),
+    await import("../client/module").then((r) => r.default),
+    await import("../server/module").then((r) => r.default),
+    await import("../ssr/module").then((r) => r.default),
   );
 
   return new OsmosApp(options);

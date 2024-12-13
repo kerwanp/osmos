@@ -45,8 +45,6 @@ export function serverCss(options: ServerCSSOptions): PluginOption {
             [options.serverEntry],
           );
 
-          console.log(urls);
-
           return [...urls.map((url) => `import '${url}'`)].join("\n");
         }
       },

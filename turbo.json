@@ -13,8 +13,12 @@
     "check-types": {
       "dependsOn": ["^check-types"]
     },
-    "prepare": {
-      "dependsOn": ["^prepare"],
+    "test": {
+      "dependsOn": ["^test"],
+      "cache": false
+    },
+    "prepack": {
+      "dependsOn": ["^prepack"],
       "cache": false
     },
     "dev": {

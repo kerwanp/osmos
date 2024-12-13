@@ -6,7 +6,12 @@ import { resolveTailwindConfigFile } from "./utils";
 export async function setupViewer(osmos: OsmosApp) {
   const configPath = resolveTailwindConfigFile(osmos.options.rootDir);
 
-  if (!configPath) return;
+  if (!configPath) {
+    osmos.logger.warn(
+      "Tailwind Viewer cannot be started: Missing Tailwind configuration file.",
+    );
+    return;
+  }
 
   const route = "/_tailwind";
   const [routeWithSlash, routeWithoutSlash] = [
