@@ -45,3 +45,5 @@ jobs:
 
       - name: Publish Release
         run: pnpm exec changeset publish --tag snapshot
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
