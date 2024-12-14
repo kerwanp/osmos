@@ -35,15 +35,12 @@ jobs:
 
       - run: pnpm run build --filter="./packages/*"
 
-      - name: Bump Package Versions
+      - name: Bump and Release
         run: |
           pnpm exec changeset status
           pnpm exec changeset pre exit || true
           pnpm exec changeset version --snapshot
+          pnpm exec changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish Release
-        run: pnpm exec changeset publish
-        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
