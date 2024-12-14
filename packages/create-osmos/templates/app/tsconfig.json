@@ -1,0 +1,4 @@
+{
+  "extends": "./.osmos/types/tsconfig.json",
+  "include": ["src"]
+}

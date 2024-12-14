@@ -4,7 +4,6 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepack": "osmos kit prepare",
     "build": "osmos kit build",
     "play": "osmos dev --cwd playground",
     "configure": "osmos configure @osmosjs/tailwindcss --cwd playground"
@@ -21,7 +20,7 @@
   ],
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "fast-glob": "^3.3.2",

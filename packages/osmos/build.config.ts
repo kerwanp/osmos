@@ -8,6 +8,9 @@ export default defineBuildConfig({
     "src/cli/index",
     "src/config/index",
     "src/module/index",
+    "src/server/module",
+    "src/ssr/module",
+    "src/client/module",
     ...["ssr", "server", "client", "nitro", "router"].map(
       (name) =>
         ({
