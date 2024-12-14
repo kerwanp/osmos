@@ -39,11 +39,11 @@ jobs:
         run: |
           pnpm exec changeset status
           pnpm exec changeset pre exit || true
-          pnpm exec changeset version --snapshot snapshot
+          pnpm exec changeset version --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Release
-        run: pnpm exec changeset publish --tag snapshot
+        run: pnpm exec changeset publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
