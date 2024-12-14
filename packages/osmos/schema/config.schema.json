@@ -178,8 +178,8 @@
       "tags": [
         "@see [Vite configuration docs](https://vite.dev/config) for more information.\nPlease note that not all vite options are supported in Nuxt."
       ],
-      "tsType": "typeof import('../src/types/config').ViteConfig & { $client?: typeof import('../src/types/config').ViteConfig, $server?: typeof import('../src/types/config').ViteConfig }",
-      "markdownType": "SrcTypesConfigViteConfig & { $client?: SrcTypesConfigViteConfig, $server?: SrcTypesConfigViteConfig }",
+      "tsType": "typeof import('vite').InlineConfig",
+      "markdownType": "ViteInlineConfig",
       "id": "#vite",
       "properties": {
         "root": {

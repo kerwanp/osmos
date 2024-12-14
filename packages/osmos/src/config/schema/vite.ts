@@ -6,7 +6,7 @@ export default defineUntypedSchema({
    *
    * @see [Vite configuration docs](https://vite.dev/config) for more information.
    * Please note that not all vite options are supported in Nuxt.
-   * @type {typeof import('../src/types/config').ViteConfig & { $client?: typeof import('../src/types/config').ViteConfig, $server?: typeof import('../src/types/config').ViteConfig }}
+   * @type {typeof import('vite').InlineConfig}
    */
   vite: {
     root: {

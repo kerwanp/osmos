@@ -1,5 +1,5 @@
 import type { NitroConfig } from 'nitropack/types'
-import type { ViteConfig } from '../src/types/config'
+import type { InlineConfig } from 'vite'
 export interface ConfigSchema {
  /** @default "/home/martin/workspace/random/osmos/packages/osmos" */
  rootDir: string,
@@ -83,5 +83,5 @@ export interface ConfigSchema {
   * @see [Vite configuration docs](https://vite.dev/config) for more information.
   * Please note that not all vite options are supported in Nuxt.
  */
- vite: ViteConfig & { $client?: ViteConfig, $server?: ViteConfig },
+ vite: InlineConfig,
 }
