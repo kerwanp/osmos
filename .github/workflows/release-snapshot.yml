@@ -1,0 +1,47 @@
+name: Create Snapshot release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: ⬇ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚡ Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: 🅝 Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 📦 Install PNPM dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+
+      - run: pnpm run build --filter="./packages/*"
+
+      - name: Bump Package Versions
+        run: |
+          pnpm exec changeset status
+          pnpm exec changeset pre exit || true
+          pnpm exec changeset version --snapshot snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Release
+        run: pnpm exec changeset publish --tag snapshot
