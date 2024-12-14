@@ -1,16 +1,6 @@
-export type Route = LayoutRoute | PageRoute;
-
-export type LayoutRoute = {
+export type Route = {
   path: string;
-  type: "layout";
-  children: Route[];
+  pattern: string;
+  type: string;
   source: string;
 };
-
-export type PageRoute = {
-  path: string;
-  type: "page";
-  source: string;
-};
-
-export type RouteType = Route["type"];

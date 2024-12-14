@@ -72,6 +72,23 @@
 - **Default**: `[]`
 
 
+# `devServer`
+
+## `port`
+- **Type**: `number`
+- **Default**: `3000`
+
+
+## `host`
+- **Type**: `undefined`
+- **Default**: `undefined`
+
+
+## `https`
+- **Type**: `boolean`
+- **Default**: `false`
+
+
 # `nitro`
 
 ## `routeRules`
@@ -88,3 +105,15 @@
 ## `plugins`
 - **Type**: `array`
 - **Default**: `["autoprefixer"]`
+
+
+# `vite`
+
+## `root`
+- **Type**: `string`
+- **Default**: `"/home/martin/workspace/random/osmos/packages/osmos"`
+
+
+## `mode`
+- **Type**: `string`
+- **Default**: `"production"`

@@ -29,6 +29,9 @@ export default defineCommand({
 
     const devServer = await createOsmosDevServer(osmos);
 
-    await devServer.listen(3131);
+    await devServer.listen(osmos.options.devServer.port, {
+      hostname: osmos.options.devServer.host,
+      https: osmos.options.devServer.https,
+    });
   },
 });

@@ -1,4 +1,5 @@
 import type { NitroConfig } from 'nitropack/types'
+import type { ViteConfig } from '../src/types/config'
 export interface ConfigSchema {
  /** @default "/home/martin/workspace/random/osmos/packages/osmos" */
  rootDir: string,
@@ -42,6 +43,16 @@ export interface ConfigSchema {
 
  css: Array<any>,
 
+ devServer: {
+  /** @default 3000 */
+  port: number,
+
+  host: any,
+
+  /** @default false */
+  https: boolean,
+ },
+
  /**
   * Configuration for Nitro.
   * 
@@ -64,4 +75,13 @@ export interface ConfigSchema {
   /** @default ["autoprefixer"] */
   plugins: Array<string>,
  },
+
+ /**
+  * Configuration that will be passed directly to Vite.
+  * 
+  * 
+  * @see [Vite configuration docs](https://vite.dev/config) for more information.
+  * Please note that not all vite options are supported in Nuxt.
+ */
+ vite: ViteConfig & { $client?: ViteConfig, $server?: ViteConfig },
 }

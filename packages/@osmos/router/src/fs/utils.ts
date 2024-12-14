@@ -1,6 +1,7 @@
 import esbuild from "esbuild";
 import fs from "fs";
 import { parse } from "es-module-lexer";
+import { Route } from "../types";
 
 export function analyzeModule(src: string) {
   return parse(
@@ -15,17 +16,43 @@ export function analyzeModule(src: string) {
 
 const PATH_RE = new RegExp(/(.*)\/(.*)\.(.*)/);
 
-export function toPath(src: string, cwd: string) {
+export function toRoute(
+  src: string,
+  cwd: string,
+  types: string[],
+): Route | null {
   const matches = cleanPath(src, cwd).match(PATH_RE);
 
   if (!matches) return null;
 
+  const path = matches[1].length <= 0 ? "/" : matches[1];
+  const type = matches[2];
+
+  if (!types.includes(type)) return null;
+
   return {
     source: src,
-    path: matches[1].length <= 0 ? "/" : matches[1],
-    type: matches[2],
-    ext: matches[3],
+    pattern: pathToRegexp(path, type === "layout"),
+    path,
+    type,
   };
+}
+
+export function pathToRegexp(path: string, middleware: boolean): string {
+  let pattern = `^${path}`;
+
+  pattern = pattern
+    .split("/")
+    .map((segment) => {
+      return segment.replace(/\[(.+)\]/, "(?<$1>.+)");
+    })
+    .join("/");
+
+  if (!middleware) {
+    pattern += "$";
+  }
+
+  return new RegExp(pattern).source;
 }
 
 /**

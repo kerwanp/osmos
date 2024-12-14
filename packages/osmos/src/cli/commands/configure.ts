@@ -21,13 +21,20 @@ export default defineCommand({
     const options = await loadOsmosConfig({ cwd: resolve(args.cwd) });
     const osmos = await createOsmos(options);
 
-    osmos.logger.info(`Configuring module '${args.name}'`);
-    const mod = (await import(args.name).then(
-      (r) => r.default,
-    )) as ModuleDefinition;
+    osmos.logger.start(`Configuring module '${args.name}'...`);
+    const mod = await import(args.name).then((r) => r.default);
 
-    if (mod.configure) {
-      await mod.configure(osmos, osmos.logger.withTag(mod.name));
+    let fn = mod;
+
+    // TODO: HOTFIX: issue when importing module stubbed with jitti
+    if (typeof fn === "object" && "default" in fn) {
+      fn = mod.default;
+    }
+
+    const module = fn();
+
+    if (module.configure) {
+      await module.configure(osmos, osmos.logger.withTag(mod.name));
     }
 
     osmos.logger.success(`Module '${args.name}' successfully configured`);

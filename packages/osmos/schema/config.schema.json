@@ -94,6 +94,29 @@
         "type": "any"
       }
     },
+    "devServer": {
+      "id": "#devServer",
+      "properties": {
+        "port": {
+          "type": "number",
+          "id": "#devServer/port",
+          "default": 3000
+        },
+        "host": {
+          "id": "#devServer/host"
+        },
+        "https": {
+          "type": "boolean",
+          "id": "#devServer/https",
+          "default": false
+        }
+      },
+      "default": {
+        "port": 3000,
+        "https": false
+      },
+      "type": "object"
+    },
     "nitro": {
       "title": "Configuration for Nitro.",
       "description": "",
@@ -148,6 +171,33 @@
         ]
       },
       "type": "object"
+    },
+    "vite": {
+      "title": "Configuration that will be passed directly to Vite.",
+      "description": "",
+      "tags": [
+        "@see [Vite configuration docs](https://vite.dev/config) for more information.\nPlease note that not all vite options are supported in Nuxt."
+      ],
+      "tsType": "typeof import('../src/types/config').ViteConfig & { $client?: typeof import('../src/types/config').ViteConfig, $server?: typeof import('../src/types/config').ViteConfig }",
+      "markdownType": "SrcTypesConfigViteConfig & { $client?: SrcTypesConfigViteConfig, $server?: SrcTypesConfigViteConfig }",
+      "id": "#vite",
+      "properties": {
+        "root": {
+          "id": "#vite/root",
+          "default": "/home/martin/workspace/random/osmos/packages/osmos",
+          "type": "string"
+        },
+        "mode": {
+          "id": "#vite/mode",
+          "default": "production",
+          "type": "string"
+        }
+      },
+      "default": {
+        "root": "/home/martin/workspace/random/osmos/packages/osmos",
+        "mode": "production"
+      },
+      "type": "object"
     }
   },
   "default": {
@@ -172,6 +222,10 @@
       "baseURL": "/"
     },
     "css": [],
+    "devServer": {
+      "port": 3000,
+      "https": false
+    },
     "nitro": {
       "routeRules": {}
     },
@@ -180,6 +234,10 @@
       "plugins": [
         "autoprefixer"
       ]
+    },
+    "vite": {
+      "root": "/home/martin/workspace/random/osmos/packages/osmos",
+      "mode": "production"
     }
   },
   "type": "object"

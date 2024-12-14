@@ -1,6 +1,6 @@
 /// <reference path="../virtual.d.ts" />
 
-import { DevEnvironment, PluginOption } from "vite";
+import { PluginOption } from "vite";
 import { createFileSystemRouter, FileSystemRouter } from "./router";
 
 export type FileSystemRouterOptions = {
@@ -39,15 +39,17 @@ function hmr(router: FileSystemRouter): PluginOption {
             undefined,
             true,
           );
-        }
 
-        clientEnvironment.hot.send({ type: "full-reload" });
+          clientEnvironment.hot.send({ type: "full-reload" });
+        }
       });
     },
     hotUpdate(options) {
       if (this.environment.name !== "rsc") {
         return;
       }
+
+      console.log(options.modules);
 
       if (options.type === "create") {
         router.addRoute(options.file);
@@ -58,12 +60,11 @@ function hmr(router: FileSystemRouter): PluginOption {
       }
 
       if (options.type === "update") {
+        console.log("UPDATE", options.file);
         router.updateRoute(options.file);
       }
 
-      // TODO: We might want to handle update when we start extracting metadata from file.
-
-      return [];
+      return;
     },
   };
 }
@@ -83,7 +84,10 @@ function virtual(router: FileSystemRouter): PluginOption {
       if (id === $virtualId) {
         const code = JSON.stringify(await router.getRoutes(), (key, value) => {
           if (key !== "source") return value;
-          return `_$() => import('${value}')$_`;
+          return {
+            id: value,
+            import: `_$() => import('${value}')$_`,
+          };
         })
           .replaceAll('"_$', "")
           .replaceAll('$_"', "");

@@ -63,8 +63,7 @@ export default eventHandler(async (event) => {
 
   setHeader(event, "content-type", "text/html");
 
-  return stream;
-  // return stream.pipe(injectToHead(assets.head));
+  return stream.pipe(injectToHead(assets.head));
 });
 
 function injectToHead(data: string) {

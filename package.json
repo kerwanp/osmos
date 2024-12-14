@@ -1,10 +1,11 @@
 {
   "name": "workspace",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "turbo build",
     "prepack": "turbo prepack",
-    "dev": "turbo dev --filter=./packages/*",
+    "dev": "turbo dev",
     "playground": "turbo dev --filter=playground",
     "playground:build": "turbo build --filter=playground",
     "playground:start": "turbo start --filter=playground",

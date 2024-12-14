@@ -41,7 +41,6 @@ export async function setupViewer(osmos: OsmosApp) {
     nitro.options.devHandlers.unshift(
       {
         handler: eventHandler((event) => {
-          console.log(event.path);
           if (event.path === routeWithoutSlash) {
             return sendRedirect(event, routeWithSlash, 301);
           }

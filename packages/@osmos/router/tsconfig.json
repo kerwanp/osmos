@@ -10,8 +10,8 @@
     "noImplicitAny": false,
     "declaration": true,
     "esModuleInterop": true,
-    "types": ["vite/client"]
+    "types": ["vite/client", "vitest/globals"]
   },
   "exclude": ["dist", "node_modules"],
-  "include": ["src"]
+  "include": ["src", "test"]
 }

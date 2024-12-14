@@ -76,6 +76,9 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
 
 function environment(options: ReactSSROptions): EnvironmentOptions {
   return {
+    optimizeDeps: {
+      include: ["react-server-dom-esm/client"],
+    },
     build: {
       manifest: true,
       outDir: options.outDir,

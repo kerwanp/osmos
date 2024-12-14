@@ -1,7 +1,7 @@
-import type { LayoutRoute, Route } from "../types";
+import type { Route } from "../types";
 import { posix } from "node:path";
 import fg from "fast-glob";
-import { toPath, analyzeModule } from "./utils";
+import { toRoute, analyzeModule } from "./utils";
 import consola from "consola";
 import { globby } from "globby";
 import mm from "micromatch";
@@ -13,8 +13,9 @@ export type RouterConfig = {
 
 export const glob = (path: string) => fg.sync(path, { absolute: true });
 
-type RoutePath = ReturnType<typeof toPath> & {};
-
+/**
+ * TODO: We might want to construct the tree ahead of time and not on the fly for performance reasons
+ */
 export class FileSystemRouter extends EventTarget {
   #routes: Route[] = [];
   #config: RouterConfig;
@@ -34,23 +35,10 @@ export class FileSystemRouter extends EventTarget {
     );
   }
 
-  #routeNode(path: string, routes: Route[]): Route[] {
-    const node = routes.find(
-      (r) => r.type === "layout" && path.startsWith(r.path),
-    ) as LayoutRoute | undefined;
-
-    if (node) {
-      const deeper = this.#routeNode(path, node.children);
-      return deeper ?? node.children;
-    }
-
-    return routes;
-  }
-
   async addRoute(src: string) {
-    const routePath = toPath(src, this.#config.dir);
+    const route = toRoute(src, this.#config.dir, ["page", "layout"]);
 
-    if (!routePath) return;
+    if (!route) return;
 
     const [_, exports] = analyzeModule(src);
 
@@ -59,27 +47,17 @@ export class FileSystemRouter extends EventTarget {
       return;
     }
 
-    if (routePath.type === "layout") {
-      this.#addLayout(routePath);
-    }
-
-    if (routePath.type === "page") {
-      this.#addPage(routePath);
-    }
+    this.#routes.push(route);
+    this.dispatchEvent(new CustomEvent("reload"));
+    return true;
   }
 
-  async removeRoute(src: string) {
-    const routePath = toPath(src, this.#config.dir);
-
-    if (!routePath) return;
-
-    if (routePath.type === "page") {
-      this.#removePage(routePath);
-    }
-
-    if (routePath.type === "layout") {
-      this.#removeLayout(routePath);
-    }
+  removeRoute(src: string) {
+    const existing = this.#routes.findIndex((r) => r.source === src);
+    if (existing < 0) return;
+    this.#routes.splice(existing, 1);
+    this.dispatchEvent(new CustomEvent("reload"));
+    return true;
   }
 
   isRoute(src: string): boolean {
@@ -87,50 +65,9 @@ export class FileSystemRouter extends EventTarget {
   }
 
   async updateRoute(src: string) {
-    if (!this.isRoute(src)) return;
-
+    if (!this.#routes.find((r) => r.source === src)) return;
     this.dispatchEvent(new CustomEvent("reload"));
-  }
-
-  async #removePage(path: RoutePath) {
-    const node = this.#routeNode(path.path, this.#routes);
-    const i = node.findIndex((route) => route.path === path.path);
-
-    if (i >= 0) {
-      node.splice(i, 1);
-    }
-
-    this.dispatchEvent(new CustomEvent("reload"));
-  }
-
-  async #removeLayout(path: RoutePath) {
-    const node = this.#routeNode(path.path, this.#routes);
-    console.log("NODE", node);
-  }
-
-  async #addLayout(path: RoutePath) {
-    const node = this.#routeNode(path.path, this.#routes);
-
-    node.push({
-      type: "layout",
-      path: path.path,
-      source: path.source,
-      children: [],
-    });
-
-    this.dispatchEvent(new CustomEvent("reload"));
-  }
-
-  async #addPage(path: RoutePath) {
-    const node = this.#routeNode(path.path, this.#routes);
-
-    node.push({
-      type: "page",
-      path: path.path,
-      source: path.source,
-    });
-
-    this.dispatchEvent(new CustomEvent("reload"));
+    return true;
   }
 
   async compile() {

@@ -30,11 +30,6 @@ export default defineCommand({
         emitCJS: false,
         cjsBridge: true,
       },
-      stubOptions: {
-        jiti: {
-          interopDefault: false,
-        },
-      },
       externals: [
         ...Object.keys(packageJson.dependencies),
         ...Object.keys(packageJson.devDependencies),

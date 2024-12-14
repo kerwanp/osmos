@@ -20,6 +20,10 @@
     "baseURL": "/"
   },
   "css": [],
+  "devServer": {
+    "port": 3000,
+    "https": false
+  },
   "routeRules": {},
   "nitro": {
     "routeRules": {}
@@ -28,5 +32,9 @@
     "plugins": [
       "autoprefixer"
     ]
+  },
+  "vite": {
+    "root": "/home/martin/workspace/random/osmos/packages/osmos",
+    "mode": "production"
   }
 }

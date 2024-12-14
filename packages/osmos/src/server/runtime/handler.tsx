@@ -19,7 +19,7 @@ export async function render(location: string) {
     routes,
     location,
     importer: (route) =>
-      (route as any).source(route.source).then((m: any) => m.default),
+      (route as any).source.import().then((m: any) => m.default),
   });
 
   return renderToPipeableStream(<Router />, "");

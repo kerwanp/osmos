@@ -4,6 +4,8 @@ import ssrHandler from "../../ssr/runtime/handler";
 export default eventHandler(async (event) => {
   const stream = await ssrHandler(event);
 
+  console.log(import.meta.prerender);
+
   // const response = await new Promise((resolve, reject) => {
   //   let res = "";
   //   const td = new TextDecoder();

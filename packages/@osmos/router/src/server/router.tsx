@@ -1,8 +1,37 @@
 import type { FC } from "react";
-import type { LayoutRoute, PageRoute, Route } from "../types";
+import type { Route } from "../types";
+import { matchRoutes } from "../utils/routes";
+
+type RouteWithMatches = ReturnType<typeof matchRoutes>;
+type Importer = (route: Route) => Promise<FC<any>>;
 
 export async function importRoute(route: Route) {
   return (route.source as any).import().then((r: any) => r.default);
+}
+
+function isRootLayout(route: Route) {
+  return route.type === "layout" && route.path === "/";
+}
+
+async function Renderer({
+  routes,
+  importer,
+}: {
+  routes: RouteWithMatches;
+  importer: Importer;
+}) {
+  const [next, params] = routes.splice(0, 1)[0];
+
+  const PageOrLayout = await importer(next);
+  if (next.type === "layout") {
+    return (
+      <PageOrLayout params={params}>
+        <Renderer routes={routes} importer={importer} />
+      </PageOrLayout>
+    );
+  }
+
+  return <PageOrLayout params={params} />;
 }
 
 export async function ServerRouter({
@@ -12,36 +41,28 @@ export async function ServerRouter({
 }: {
   routes: Route[];
   location: string;
-  importer: (route: Route) => Promise<FC<any>>;
+  importer: Importer;
 }) {
-  const layout = routes.find(
-    (r) => r.type === "layout" && location.startsWith(r.path),
-  ) as LayoutRoute | undefined;
+  const matches = matchRoutes(location, routes);
 
-  if (layout) {
-    const Layout = await importer(layout);
-
-    return (
-      <Layout>
-        <ServerRouter
-          routes={layout.children}
-          location={location}
-          importer={importer}
-        />
-      </Layout>
-    );
+  // If last item is not a page, it is a 404
+  // TODO: Later we want to handle custom error pages
+  if (matches[matches.length - 1][0]?.type !== "page") {
+    return <div>404 Not found</div>;
   }
 
-  const page = routes.find((r) => r.type === "page" && r.path === location) as
-    | PageRoute
-    | undefined;
-  if (page) {
-    const Page = await importer(page);
-
-    return <Page />;
+  const rootLayout = matches.splice(0, 1)[0];
+  if (!rootLayout || !isRootLayout(rootLayout[0])) {
+    throw new Error("No root layout found");
   }
 
-  return <div>404 page not found</div>;
+  const RootLayout = await importer(rootLayout[0]);
+
+  return (
+    <RootLayout params={rootLayout[1]}>
+      <Renderer routes={matches} importer={importer} />
+    </RootLayout>
+  );
 }
 
 export type CreateServerRouterOptions = {

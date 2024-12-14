@@ -115,6 +115,7 @@ function environment(options: ReactServerOptions): EnvironmentOptions {
         "react/jsx-dev-runtime",
         "osmos > react-server-dom-esm/server",
         "osmos > react-server-dom-esm/server.node",
+        "unified", // TODO: Remove this after fixing cjs imports
       ],
       esbuildOptions: {
         target: "esnext",
