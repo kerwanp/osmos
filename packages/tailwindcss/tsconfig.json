@@ -1,5 +1,5 @@
 {
-  "extends": "@osmos/tsconfig/module.json",
+  "extends": "@osmosjs/tsconfig/module.json",
   "exclude": ["dist", "node_modules"],
   "include": ["src"]
 }

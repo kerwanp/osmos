@@ -1,6 +1,5 @@
 import {
   createServerModuleRunner,
-  DevEnvironment,
   EnvironmentOptions,
   PluginOption,
 } from "vite";
@@ -113,8 +112,8 @@ function environment(options: ReactServerOptions): EnvironmentOptions {
         "react",
         "react/jsx-runtime",
         "react/jsx-dev-runtime",
-        "osmos > react-server-dom-esm/server",
-        "osmos > react-server-dom-esm/server.node",
+        "@osmosjs/osmos > react-server-dom-esm/server",
+        "@osmosjs/osmos > react-server-dom-esm/server.node",
         "unified", // TODO: Remove this after fixing cjs imports
       ],
       esbuildOptions: {

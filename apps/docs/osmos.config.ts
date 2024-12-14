@@ -1,10 +1,10 @@
-import { defineConfig } from "osmos/config";
+import { defineConfig } from "@osmosjs/osmos/config";
 import mdx from "@mdx-js/rollup";
 
 export default defineConfig({
   debug: false,
   routeRules: {},
-  modules: ["@osmos/tailwindcss"],
+  modules: ["@osmosjs/tailwindcss"],
   devServer: {
     port: 3000,
   },

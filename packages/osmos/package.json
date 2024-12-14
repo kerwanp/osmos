@@ -1,5 +1,5 @@
 {
-  "name": "osmos",
+  "name": "@osmosjs/osmos",
   "version": "0.0.0",
   "description": "",
   "type": "module",
@@ -29,8 +29,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@osmos/react-server-dom-esm": "workspace:*",
-    "@osmos/router": "workspace:*",
+    "@osmosjs/router": "workspace:*",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "c12": "^2.0.1",

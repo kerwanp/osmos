@@ -1,9 +1,9 @@
-import { defineOsmosModule } from "osmos/module";
+import { defineOsmosModule } from "@osmosjs/osmos/module";
 import { setupViewer } from "./viewer";
 import { ensureDependencyInstalled } from "nypm";
 
 export default defineOsmosModule({
-  name: "@osmos/tailwindcss",
+  name: "@osmosjs/tailwindcss",
   setup(app) {
     app.options.postcss.plugins.push("tailwindcss");
     if (app.options.dev) {

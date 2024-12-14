@@ -1,5 +1,5 @@
 {
-  "name": "@osmos/tailwindcss-playground",
+  "name": "@osmosjs/tailwindcss-playground",
   "type": "module",
   "private": true,
   "devDependencies": {

@@ -15,11 +15,6 @@ export default defineCommand({
       JSON.parse(r.toString()),
     );
 
-    console.log([
-      ...Object.keys(packageJson.dependencies),
-      ...Object.keys(packageJson.devDependencies),
-    ]);
-
     await build(cwd, false, {
       declaration: true,
       entries: ["src/module"],

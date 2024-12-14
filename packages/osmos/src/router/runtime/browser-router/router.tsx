@@ -1,4 +1,4 @@
-import ReactServerDOM from "@osmos/react-server-dom-esm/client";
+import ReactServerDOM from "react-server-dom-esm/client";
 import React from "react";
 import { TypedEventTarget } from "../types/event-target";
 import { render } from "./dom";

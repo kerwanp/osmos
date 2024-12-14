@@ -1,6 +1,6 @@
 import { eventHandler, setHeaders } from "h3";
 import { renderToPipeableStream } from "react-server-dom-esm/server";
-import { createServerRouter } from "@osmos/router/server";
+import { createServerRouter } from "@osmosjs/router/server";
 import routes from "virtual:osmos:routes";
 
 export default eventHandler(async (event) => {

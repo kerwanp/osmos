@@ -43,9 +43,8 @@ export function pathToRegexp(path: string, middleware: boolean): string {
 
   pattern = pattern
     .split("/")
-    .map((segment) => {
-      return segment.replace(/\[(.+)\]/, "(?<$1>.+)");
-    })
+    // /users/[id] => /users/(?<id>.+)
+    .map((segment) => segment.replace(/\[(.+)\]/, "(?<$1>.+)"))
     .join("/");
 
   if (!middleware) {

@@ -1,13 +1,13 @@
 {
-  "name": "@osmos/tailwindcss",
-  "version": "1.0.0",
+  "name": "@osmosjs/tailwindcss",
+  "version": "0.0.0",
   "description": "",
   "type": "module",
   "scripts": {
     "prepack": "osmos kit prepare",
     "build": "osmos kit build",
     "play": "osmos dev --cwd playground",
-    "configure": "osmos configure @osmos/tailwindcss --cwd playground"
+    "configure": "osmos configure @osmosjs/tailwindcss --cwd playground"
   },
   "exports": {
     ".": {
@@ -23,8 +23,8 @@
     "fast-glob": "^3.3.2",
     "h3": "npm:h3-nightly@latest",
     "nypm": "^0.4.1",
-    "osmos": "workspace:*",
-    "@osmos/tsconfig": "workspace:*",
+    "@osmosjs/osmos": "workspace:*",
+    "@osmosjs/tsconfig": "workspace:*",
     "pathe": "^1.1.2",
     "postcss": "^8.4.49",
     "tailwind-config-viewer": "^2.0.4",

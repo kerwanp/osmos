@@ -18,7 +18,7 @@ export default defineCommand({
         emitCJS: false,
         cjsBridge: true,
       },
-      externals: ["osmos"],
+      externals: ["@osmosjs/osmos"],
     });
   },
 });

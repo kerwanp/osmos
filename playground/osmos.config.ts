@@ -1,9 +1,9 @@
-import { defineConfig } from "osmos/config";
+import { defineConfig } from "@osmosjs/osmos/config";
 
 export default defineConfig({
   debug: false,
   routeRules: {},
-  modules: ["@osmos/tailwindcss"],
+  modules: ["@osmosjs/tailwindcss"],
   devServer: {
     port: 3001,
   },

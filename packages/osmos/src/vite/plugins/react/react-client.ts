@@ -28,9 +28,7 @@ export function reactClient(options: ReactClientOptions): PluginOption {
             outDir: options.outDir,
             manifest: true,
             rollupOptions: {
-              input: {
-                index: options.entry,
-              },
+              input: [options.entry],
             },
           },
         },

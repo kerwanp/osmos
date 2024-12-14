@@ -8,7 +8,7 @@ import { join } from "pathe";
 import { reactClient } from "./plugins/react/react-client";
 import { serverCss } from "./plugins/react/server-css";
 import { nitro } from "./plugins/nitro";
-import { fileSystemRouter } from "@osmos/router/fs";
+import { fileSystemRouter } from "@osmosjs/router/fs";
 import postcss from "./plugins/postcss";
 import randomPort from "./plugins/random-port";
 import defu from "defu";
