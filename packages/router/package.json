@@ -8,6 +8,10 @@
     "build": "unbuild",
     "test": "vitest"
   },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

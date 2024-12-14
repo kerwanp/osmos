@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
+  "files": [
+    "base.json",
+    "module.json"
+  ],
   "author": "",
   "license": "MIT"
 }
