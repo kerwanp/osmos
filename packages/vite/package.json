@@ -18,8 +18,8 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
     },
-    "./types": "./dist/types.d.ts",
-    "./virtual": "./dist/virtual.d.ts"
+    "./types": "./src/types.d.ts",
+    "./virtual": "./src/virtual.d.ts"
   },
   "keywords": [],
   "author": "",

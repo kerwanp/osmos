@@ -3,6 +3,8 @@ import { transformSource } from "react-server-dom-esm/node-loader";
 import { PluginOption } from "vite";
 import { buildImportProxy, createEntryName, createHash } from "../utils";
 import { join, relative } from "path";
+import { $global } from "../global";
+import serverManifest from "./server-manifest";
 
 export type ReactServerPluginOptions = {
   environmentName: string;
@@ -24,6 +26,7 @@ export default function reactServer(
         "/home/martin/workspace/random/osmos/packages/osmos/src/server/runtime/renderer.tsx",
       ],
     }),
+    serverManifest(),
   ];
 }
 
@@ -48,6 +51,7 @@ export function reactServerEnvironment(
             "react/jsx-runtime",
             "react/jsx-dev-runtime",
             "react-server-dom-esm/server",
+            "react-server-dom-esm/client",
           ],
           esbuildOptions: {
             target: "esnext",
@@ -74,18 +78,6 @@ export type ReactServerTransformPluginOptions = {
 export function reactServerTransform(
   options: ReactServerTransformPluginOptions,
 ): PluginOption {
-  const references = new Map<
-    string,
-    {
-      hash: string;
-      referenceId?: string;
-      fileName?: string;
-    }
-  >();
-
-  const manifestVirtualId = "virtual:react-server:manifest";
-  const $manifestVirtualId = `\0${manifestVirtualId}`;
-
   const assetsVirtualId = "virtual:react-server:assets";
   const $assetsVirtualId = `\0${assetsVirtualId}`;
 
@@ -97,9 +89,9 @@ export function reactServerTransform(
       };
     },
     resolveId(id) {
-      if (id === manifestVirtualId) {
-        return $manifestVirtualId;
-      }
+      // if (id === manifestVirtualId) {
+      //   return $manifestVirtualId;
+      // }
 
       if (id === assetsVirtualId) {
         return $assetsVirtualId;
@@ -107,7 +99,7 @@ export function reactServerTransform(
     },
     buildStart() {
       if (this.environment.name === "client") {
-        for (const [id] of references.entries()) {
+        for (const [id] of $global.clientReferences.entries()) {
           this.emitFile({
             type: "chunk",
             id,
@@ -119,33 +111,11 @@ export function reactServerTransform(
     async load(id) {
       if (this.environment.name === options.environmentName) return;
 
-      if (id === $manifestVirtualId) {
-        if (this.environment.mode === "dev") {
-          return [
-            `export default {`,
-            ...[...references.entries()].map(
-              ([id, { hash, fileName }]) =>
-                `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`,
-            ),
-            "}",
-          ].join("\n");
-        } else {
-          return [
-            `export default {`,
-            ...[...references.entries()].map(
-              ([id, { hash, fileName }]) =>
-                `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`,
-            ),
-            "}",
-          ].join("\n");
-        }
-      }
-
       if (id === $assetsVirtualId) {
         if (this.environment.mode === "dev") {
           return [
             `export default {`,
-            ...[...references.entries()].map(
+            ...[...$global.clientReferences.entries()].map(
               ([id, { hash, fileName }]) =>
                 `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`,
             ),
@@ -154,7 +124,7 @@ export function reactServerTransform(
         } else {
           return [
             `export default {`,
-            ...[...references.entries()].map(
+            ...[...$global.clientReferences.entries()].map(
               ([id, { hash, fileName }]) =>
                 `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`,
             ),
@@ -180,8 +150,9 @@ export function reactServerTransform(
       );
 
       if (source.length !== code.length) {
+        console.log("TRANFORMED", id);
         // Client References are stored to generate the manifest.
-        references.set(id, { hash: url, fileName: id });
+        $global.clientReferences.set(id, { hash: url, fileName: id });
       }
 
       return source;
@@ -190,7 +161,7 @@ export function reactServerTransform(
       if (this.environment.name === "client") {
         const chunks = Object.values(bundle).filter((a) => a.type === "chunk");
 
-        for (const [id, value] of references.entries()) {
+        for (const [id, value] of $global.clientReferences.entries()) {
           const chunk = chunks.find((chunk) => chunk.facadeModuleId === id);
           if (!chunk) {
             throw new Error(
@@ -198,7 +169,7 @@ export function reactServerTransform(
             );
           }
 
-          references.set(id, {
+          $global.clientReferences.set(id, {
             ...value,
             fileName: `/${chunk.fileName}`,
           });

@@ -22,6 +22,7 @@ export function reactClient(options: ReactClientOptions): PluginOption {
               "react/jsx-dev-runtime",
               "react-dom",
               "react-dom/client",
+              "react-server-dom-esm/client",
             ],
           },
           build: {

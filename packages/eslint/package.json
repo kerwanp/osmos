@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "description": "",
   "type": "module",
-  "scripts": {
-    "build": "unbuild",
-    "test": "vitest"
-  },
   "files": [
     "index.js"
   ],

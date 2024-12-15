@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-  @apply bg-zinc-900;
+  @apply bg-zinc-200;
 }

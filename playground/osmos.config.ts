@@ -1,7 +1,7 @@
 import { defineConfig } from "@osmosjs/osmos/config";
 
 export default defineConfig({
-  debug: false,
+  debug: true,
   routeRules: {},
   modules: ["@osmosjs/tailwindcss"],
   devServer: {

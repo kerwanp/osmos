@@ -8,6 +8,7 @@ import { createServer } from "vite";
 import { OsmosApp } from "../core/app";
 import defu from "defu";
 import { join } from "pathe";
+import { fileURLToPath } from "node:url";
 
 export async function createNitro(osmos: OsmosApp) {
   const config: NitroConfig = defu(
@@ -33,6 +34,11 @@ export async function createNitro(osmos: OsmosApp) {
       experimental: {
         tasks: true,
       },
+      plugins: [
+        fileURLToPath(
+          new URL("./runtime/plugins/app-handler", import.meta.url),
+        ),
+      ],
       typescript: {
         generateTsConfig: true,
       },

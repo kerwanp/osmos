@@ -27,6 +27,10 @@
     "./module": {
       "types": "./dist/module/index.d.ts",
       "default": "./dist/module/index.mjs"
+    },
+    "./link": {
+      "types": "./dist/link.d.ts",
+      "default": "./dist/link.mjs"
     }
   },
   "keywords": [],
