@@ -41,9 +41,11 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
     async load(id) {
       if (id === $assetsId) {
         if (this.environment.mode === "build") {
-          const clientManifest: Manifest = await readFile(
-            join(options.outDir, "../", "client", ".vite", "manifest.json"),
-          ).then((r) => JSON.parse(r.toString()));
+          // const clientManifest: Manifest = await readFile(
+          //   join(options.outDir, "../", "client", ".vite", "manifest.json"),
+          // ).then((r) => JSON.parse(r.toString()));
+          // TODO: Make this work again
+          const clientManifest: Manifest = {};
 
           // const serverManifest: Manifest = await readFile(
           //   join(options.outDir, "../", "server", ".vite", "manifest.json"),
@@ -78,6 +80,9 @@ function environment(options: ReactSSROptions): EnvironmentOptions {
   return {
     optimizeDeps: {
       include: ["react-server-dom-esm/client"],
+      esbuildOptions: {
+        target: "esnext",
+      },
     },
     build: {
       manifest: true,

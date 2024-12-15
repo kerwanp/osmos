@@ -25,7 +25,7 @@ export default defineOsmosModule({
       app.hook("nitro:init", async (nitro) => {
         nitro.options.handlers.push({
           route: "/_server",
-          handler: join(nitro.options.buildDir, "dist", "server", "index.js"),
+          handler: join(nitro.options.buildDir, "dist", "server", "handler.js"),
           middleware: true,
           lazy: true,
         });

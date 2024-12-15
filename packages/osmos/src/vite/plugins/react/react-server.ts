@@ -1,9 +1,4 @@
-import {
-  createServerModuleRunner,
-  EnvironmentOptions,
-  PluginOption,
-} from "vite";
-import { transformSource } from "react-server-dom-esm/node-loader";
+import { EnvironmentOptions, PluginOption } from "vite";
 import { ModuleRunner } from "vite/module-runner";
 import { createHash } from "crypto";
 
@@ -24,18 +19,6 @@ function test(options: ReactServerOptions): PluginOption {
 
   return {
     name: "osmos:react-server",
-    config(config) {
-      config.environments = {
-        ...config.environments,
-        rsc: environment(options),
-      };
-    },
-    async configureServer(server) {
-      const env = server.environments["rsc"];
-      const runner = createServerModuleRunner(env);
-
-      globalThis.__vite_rsc_runner = runner;
-    },
     resolveId(id) {
       if (id === clientReferencesId) {
         return $clientReferencesId;
@@ -50,37 +33,6 @@ function test(options: ReactServerOptions): PluginOption {
           ),
           `}`,
         ].join("\n");
-      }
-    },
-    async transform(code, id) {
-      if (this.environment.name === "rsc") {
-        const runtimeId = clientReferences.get(id) ?? id;
-
-        const context = {
-          format: "module",
-          url: runtimeId,
-        };
-
-        let { source } = await transformSource(
-          code,
-          context,
-          (source: string) => ({ source }),
-        );
-
-        if (
-          __vite_rsc_manager.buildStep === "scan" &&
-          source.length !== code.length
-        ) {
-          clientReferences.set(id, id);
-        }
-
-        if (
-          this.environment.mode === "dev" ||
-          (__vite_rsc_manager.buildStep === "build" &&
-            source.length !== code.length)
-        ) {
-          return source;
-        }
       }
     },
     generateBundle(_, output) {

@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "prepare": "unbuild --stub",
     "build": "unbuild"
   },
   "files": [
@@ -27,7 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.1",
-    "unbuild": "3.0.0-rc.11"
+    "unbuild": "^3.0.1"
   },
   "publishConfig": {
     "access": "public",

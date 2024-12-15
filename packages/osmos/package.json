@@ -4,6 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "prepare": "unbuild --stub",
     "build": "unbuild",
     "test": "vitest"
   },
@@ -33,6 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "@osmosjs/router": "workspace:*",
+    "@osmosjs/vite": "workspace:*",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "c12": "^2.0.1",
@@ -58,7 +60,7 @@
     "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
     "react-server-dom-webpack": "^19.0.0",
     "std-env": "^3.8.0",
-    "unbuild": "3.0.0-rc.11",
+    "unbuild": "^3.0.1",
     "untyped": "^1.5.1",
     "vite": "^6.0.3",
     "vite-plugin-virtual": "^0.3.0"

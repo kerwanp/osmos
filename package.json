@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "turbo build",
-    "prepack": "turbo prepack",
+    "prepare": "turbo prepare",
     "dev": "turbo dev",
     "playground": "turbo dev --filter=playground",
     "playground:build": "turbo build --filter=playground",

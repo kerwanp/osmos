@@ -12,6 +12,7 @@ import { fileSystemRouter } from "@osmosjs/router/fs";
 import postcss from "./plugins/postcss";
 import randomPort from "./plugins/random-port";
 import defu from "defu";
+import osmosVite from "@osmosjs/vite";
 
 export function createViteConfig(osmos: OsmosApp): InlineConfig {
   return defu(
@@ -22,10 +23,12 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
       root: osmos.options.rootDir,
       plugins: [
         randomPort(),
+        osmosVite(),
         fileSystemRouter({
           dir: osmos.options.appDir,
           extensions: osmos.options.extensions,
           files: ["page", "layout"],
+          environmentName: "server",
         }),
         postcss({
           plugins: osmos.options.postcss.plugins,
@@ -51,6 +54,7 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           ),
         }),
         serverCss({
+          environmentName: "server",
           serverEntry: fileURLToPath(
             new URL("../server/runtime/handler", import.meta.url),
           ),
@@ -66,10 +70,23 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
       environments: {
         ssr: {
           build: {
+            outDir: join(osmos.options.buildDir, "dist", "ssr"),
             rollupOptions: {
               input: {
                 renderer: fileURLToPath(
                   new URL("../nitro/runtime/renderer", import.meta.url),
+                ),
+              },
+            },
+          },
+        },
+        server: {
+          build: {
+            outDir: join(osmos.options.buildDir, "dist", "server"),
+            rollupOptions: {
+              input: {
+                handler: fileURLToPath(
+                  new URL("../server/runtime/handler", import.meta.url),
                 ),
               },
             },
@@ -97,12 +114,10 @@ export async function buildVite(osmos: OsmosApp) {
   const config = createViteConfig(osmos);
   const builder = await createBuilder(config);
 
-  __vite_rsc_manager.buildStep = "scan";
-  await builder.build(builder.environments.rsc);
-
-  await builder.build(builder.environments.client);
   await builder.build(builder.environments.ssr);
+  await builder.build(builder.environments.server);
+  await builder.build(builder.environments.client);
 
-  __vite_rsc_manager.buildStep = "build";
-  await builder.build(builder.environments.rsc);
+  // __vite_rsc_manager.buildStep = "build";
+  // await builder.build(builder.environments.rsc);
 }

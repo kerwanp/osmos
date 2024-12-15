@@ -7,6 +7,7 @@ export type FileSystemRouterOptions = {
   dir: string;
   files: string[];
   extensions: string[];
+  environmentName: string;
 };
 
 export function fileSystemRouter(
@@ -17,15 +18,26 @@ export function fileSystemRouter(
     extensions: options.extensions,
   });
 
-  return [hmr(router), virtual(router)];
+  return [
+    hmr({ router, environmentName: options.environmentName }),
+    virtual(router),
+  ];
 }
 
-function hmr(router: FileSystemRouter): PluginOption {
+export type FileSystemRouterHmrPluginOptions = {
+  router: FileSystemRouter;
+  environmentName: string;
+};
+
+function hmr({
+  router,
+  environmentName,
+}: FileSystemRouterHmrPluginOptions): PluginOption {
   return {
     name: "osmos:fs-router:hmr",
     configureServer(env) {
       const clientEnvironment = env.environments.client;
-      const serverEnvironment = env.environments.rsc;
+      const serverEnvironment = env.environments[environmentName];
 
       router.addEventListener("reload", () => {
         const mod = serverEnvironment.moduleGraph.getModuleById(

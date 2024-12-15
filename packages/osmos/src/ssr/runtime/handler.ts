@@ -4,27 +4,6 @@ import ReactServerDOM from "react-server-dom-esm/client";
 
 import { PassThrough } from "node:stream";
 import ReactDOM from "react-dom/server";
-import { fileURLToPath } from "mlly";
-// @ts-expect-error
-import nitroConfig from "$osmos/nitro";
-import { join } from "pathe";
-
-async function importRSC() {
-  let mod: typeof import("../../server/runtime/handler");
-
-  if (import.meta.env.DEV) {
-    mod = await __vite_rsc_runner.import(
-      fileURLToPath(new URL("../../server/runtime/handler", import.meta.url)),
-    );
-  } else {
-    // TODO: That's not great
-    mod = import(
-      /* @vite-ignore */ join(nitroConfig.buildDir, "dist/server/index.js")
-    ) as any;
-  }
-
-  return mod;
-}
 
 async function importClientReference(id: string) {
   if (import.meta.env.DEV) {
@@ -40,9 +19,9 @@ async function importClientReference(id: string) {
 globalThis.__import_client_ref = importClientReference;
 
 export default eventHandler(async (event) => {
-  const { render } = await importRSC();
+  const RSDE = await import("../../server/runtime/renderer");
 
-  const { pipe } = await render(event.path);
+  const { pipe } = await RSDE.render(event.path);
 
   const rscPayload = pipe(new PassThrough());
 
@@ -52,14 +31,20 @@ export default eventHandler(async (event) => {
   // @ts-ignore
   const assets = await import("$osmos/ssr-assets").then((r) => r.default);
 
-  const stream = await new Promise<ReactDOM.PipeableStream>(async (resolve) => {
-    const stream = ReactDOM.renderToPipeableStream(element, {
-      bootstrapModules: assets.bootstrapModules,
-      onShellReady() {
-        resolve(stream);
-      },
-    });
-  });
+  const stream = await new Promise<ReactDOM.PipeableStream>(
+    async (resolve, reject) => {
+      const stream = ReactDOM.renderToPipeableStream(element, {
+        bootstrapModules: assets.bootstrapModules,
+        onShellReady() {
+          resolve(stream);
+        },
+        onError(error, info) {
+          console.log(error, info);
+          reject(error);
+        },
+      });
+    },
+  );
 
   setHeader(event, "content-type", "text/html");
 

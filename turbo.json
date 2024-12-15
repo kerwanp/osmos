@@ -17,8 +17,8 @@
       "dependsOn": ["^test"],
       "cache": false
     },
-    "prepack": {
-      "dependsOn": ["^prepack"],
+    "prepare": {
+      "dependsOn": ["^prepare"],
       "cache": false
     },
     "dev": {

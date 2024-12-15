@@ -2,6 +2,7 @@ import { DevEnvironment, PluginOption, ViteDevServer } from "vite";
 
 export type ServerCSSOptions = {
   serverEntry: string;
+  environmentName: string;
 };
 
 export function serverCss(options: ServerCSSOptions): PluginOption {
@@ -41,7 +42,7 @@ export function serverCss(options: ServerCSSOptions): PluginOption {
         if (id === $cssId) {
           // TODO: Generate from manifest during build
           const urls = await collectStyleUrls(
-            viteDevServer.environments["rsc"],
+            viteDevServer.environments[options.environmentName],
             [options.serverEntry],
           );
 

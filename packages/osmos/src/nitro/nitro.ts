@@ -36,6 +36,11 @@ export async function createNitro(osmos: OsmosApp) {
       typescript: {
         generateTsConfig: true,
       },
+      esbuild: {
+        options: {
+          target: "esnext",
+        },
+      },
     },
     osmos.options.nitro,
   );
