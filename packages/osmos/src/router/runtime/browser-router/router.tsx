@@ -57,7 +57,7 @@ export class BrowserRouter extends TypedEventTarget<BrowserRouterEvents> {
 }
 
 function fetchRsc(path: string) {
-  const initialContentFetchPromise = fetch(`/_rsc${path}`);
+  const initialContentFetchPromise = fetch(`/_server${path}`);
   const initialContentPromise = ReactServerDOM.createFromFetch(
     initialContentFetchPromise,
     {

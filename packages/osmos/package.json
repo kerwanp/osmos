@@ -30,7 +30,7 @@
     },
     "./link": {
       "types": "./dist/link.d.ts",
-      "default": "./dist/link.mjs"
+      "default": "./link.js"
     }
   },
   "keywords": [],

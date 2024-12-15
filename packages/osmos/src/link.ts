@@ -1,3 +1,1 @@
-"use client";
-
-export { default as Link } from "./router/runtime/browser-router/link";
+export { default } from "./router/runtime/browser-router/link";

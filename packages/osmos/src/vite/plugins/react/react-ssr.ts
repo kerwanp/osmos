@@ -81,9 +81,6 @@ function environment(options: ReactSSROptions): EnvironmentOptions {
         target: "esnext",
       },
     },
-    resolve: {
-      noExternal: true,
-    },
     build: {
       manifest: true,
       outDir: options.outDir,

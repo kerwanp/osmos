@@ -1,13 +1,18 @@
 import { Suspense } from "react";
 import ServerComponent from "./ServerComponent";
 import ClientComponent, { SecondClientComponent } from "./ClientComponent";
-import { Link } from "@osmosjs/osmos/link";
+import Link from "@osmosjs/osmos/link";
 
 export default function Page() {
   return (
     <div>
       <h2>Homepage</h2>
-      <Link href="/">Hello</Link>
+      <ul>
+        <li>
+          <Link href="/">Homepage</Link>
+          <Link href="/users">Users</Link>
+        </li>
+      </ul>
       <ClientComponent />
       <SecondClientComponent />
       <Suspense fallback="Loading...">

@@ -83,11 +83,6 @@ export function reactServerTransform(
 
   return {
     name: "osmos:react-server:transform",
-    config() {
-      return {
-        build: {},
-      };
-    },
     resolveId(id) {
       // if (id === manifestVirtualId) {
       //   return $manifestVirtualId;
@@ -150,7 +145,6 @@ export function reactServerTransform(
       );
 
       if (source.length !== code.length) {
-        console.log("TRANFORMED", id);
         // Client References are stored to generate the manifest.
         $global.clientReferences.set(id, { hash: url, fileName: id });
       }
