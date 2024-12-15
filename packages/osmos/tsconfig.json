@@ -10,7 +10,12 @@
     "noImplicitAny": false,
     "declaration": true,
     "esModuleInterop": true,
-    "types": ["vite/client", "vitest/globals", "@osmosjs/router/virtual"]
+    "types": [
+      "vite/client",
+      "vitest/globals",
+      "@osmosjs/router/virtual",
+      "@osmosjs/vite/virtual"
+    ]
   },
   "exclude": ["dist", "node_modules"],
   "include": ["src"]

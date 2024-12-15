@@ -9,5 +9,10 @@ export default defineBuildConfig({
       builder: "copy",
       outDir: "dist/types.d.ts",
     },
+    {
+      input: "src/virtual.d.ts",
+      builder: "copy",
+      outDir: "dist/virtual.d.ts",
+    },
   ],
 });

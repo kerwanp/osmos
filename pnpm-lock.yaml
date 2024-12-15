@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@kentcdodds/tmp-react-server-dom-esm':
-    hash: ip72kpyijci4rxho3uhffjkzjm
+    hash: tx7ycmfifg6ahjdw53xasp3tie
     path: patches/@kentcdodds__tmp-react-server-dom-esm.patch
 
 importers:
@@ -45,7 +45,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       react-server-dom-esm:
         specifier: npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1
-        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=ip72kpyijci4rxho3uhffjkzjm)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
+        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=tx7ycmfifg6ahjdw53xasp3tie)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
       rehype-sanitize:
         specifier: ^6.0.0
         version: 6.0.0
@@ -203,7 +203,7 @@ importers:
         version: 8.4.49
       react-server-dom-esm:
         specifier: npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1
-        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=ip72kpyijci4rxho3uhffjkzjm)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
+        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=tx7ycmfifg6ahjdw53xasp3tie)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
       react-server-dom-webpack:
         specifier: ^19.0.0
         version: 19.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(webpack@5.97.1(esbuild@0.24.0))
@@ -376,7 +376,7 @@ importers:
         version: 0.24.0
       react-server-dom-esm:
         specifier: npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1
-        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=ip72kpyijci4rxho3uhffjkzjm)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
+        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=tx7ycmfifg6ahjdw53xasp3tie)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
       vite:
         specifier: ^6.0.3
         version: 6.0.3(@types/node@22.10.1)(jiti@2.4.1)(terser@5.37.0)(yaml@2.6.1)
@@ -410,7 +410,7 @@ importers:
         version: 19.0.0(react@19.0.0)
       react-server-dom-esm:
         specifier: npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1
-        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=ip72kpyijci4rxho3uhffjkzjm)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
+        version: '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=tx7ycmfifg6ahjdw53xasp3tie)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
     devDependencies:
       '@types/react':
         specifier: ^19.0.1
@@ -5285,7 +5285,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=ip72kpyijci4rxho3uhffjkzjm)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@kentcdodds/tmp-react-server-dom-esm@19.0.1(patch_hash=tx7ycmfifg6ahjdw53xasp3tie)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       acorn-loose: 8.4.0
       react: 19.0.0

@@ -3,6 +3,7 @@ import esbuild from "esbuild";
 import fs from "fs";
 import { parse } from "es-module-lexer";
 import { basename } from "path";
+import { getRandomValues } from "crypto";
 
 /**
  * Crawl ast to find directive.
@@ -61,4 +62,16 @@ export function analyzeModule(src: string) {
 export function createEntryName(id: string) {
   const fileNameSegments = basename(id).split(".");
   return fileNameSegments.slice(0, fileNameSegments.length - 1).join(".");
+}
+
+/**
+ * Generates a random hash for assets.
+ */
+export function createHash(
+  length = 8,
+  chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-",
+) {
+  return Array.from(getRandomValues(new Uint32Array(length)))
+    .map((v) => chars[v % chars.length])
+    .join("");
 }

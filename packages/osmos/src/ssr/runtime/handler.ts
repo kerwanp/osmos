@@ -6,13 +6,17 @@ import { PassThrough } from "node:stream";
 import ReactDOM from "react-dom/server";
 
 async function importClientReference(id: string) {
-  if (import.meta.env.DEV) {
-    return import(/* @vite-ignore */ id);
-  } else {
-    const clientReferences = await import("$osmos/client-references" as string);
-    const dynImport = clientReferences.default[id];
-    return dynImport();
+  const { default: manifest } = await import("virtual:react-server:manifest");
+
+  console.log("SSR", manifest);
+
+  const imp = manifest[id];
+
+  if (!imp) {
+    throw new Error(`Cannot find reference ${id} in the client manifest`);
   }
+
+  return imp.import();
 }
 
 // TODO: Memoize ?
@@ -30,11 +34,13 @@ export default eventHandler(async (event) => {
 
   // @ts-ignore
   const assets = await import("$osmos/ssr-assets").then((r) => r.default);
+  const { default: manifest } = await import("virtual:react-server:assets");
 
   const stream = await new Promise<ReactDOM.PipeableStream>(
     async (resolve, reject) => {
       const stream = ReactDOM.renderToPipeableStream(element, {
         bootstrapModules: assets.bootstrapModules,
+        bootstrapScriptContent: `window.__manifest = ${JSON.stringify(manifest)}`,
         onShellReady() {
           resolve(stream);
         },

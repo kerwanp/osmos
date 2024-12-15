@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-  background: red;
+  @apply bg-zinc-900;
 }

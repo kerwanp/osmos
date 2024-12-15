@@ -2,6 +2,23 @@ import React from "react";
 import { createFromFetch, encodeReply } from "react-server-dom-esm/client";
 import { hydrateRoot } from "../../router/runtime/browser-router/dom";
 
+// TODO: Move this in vite plugin
+// @ts-expect-error
+window.__osmos_resolve_client_ref = (bundlerConfig: string, metadata: any) => {
+  const url = metadata[0];
+  const name = metadata[1];
+
+  const resolvedUrl = import.meta.env.DEV
+    ? url
+    : // @ts-expect-error
+      window.__manifest[url].clientAsset;
+
+  return {
+    specifier: bundlerConfig + resolvedUrl,
+    name,
+  };
+};
+
 const getGlobalLocation = () =>
   window.location.pathname + window.location.search;
 

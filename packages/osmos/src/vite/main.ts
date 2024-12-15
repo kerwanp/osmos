@@ -1,7 +1,6 @@
 import { createBuilder, createServer, InlineConfig } from "vite";
 import { OsmosApp } from "../core/app";
 import baseReact from "@vitejs/plugin-react";
-import reactServer from "./plugins/react/react-server";
 import { fileURLToPath } from "mlly";
 import { reactSSR } from "./plugins/react/react-ssr";
 import { join } from "pathe";
@@ -35,12 +34,6 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
         }),
         baseReact(),
         nitro(osmos.nitro),
-        reactServer({
-          outDir: join(osmos.options.buildDir, "dist", "server"),
-          entry: fileURLToPath(
-            new URL("../server/runtime/handler", import.meta.url),
-          ),
-        }),
         reactSSR({
           outDir: join(osmos.options.buildDir, "dist", "ssr"),
           entry: fileURLToPath(
@@ -114,9 +107,9 @@ export async function buildVite(osmos: OsmosApp) {
   const config = createViteConfig(osmos);
   const builder = await createBuilder(config);
 
-  await builder.build(builder.environments.ssr);
   await builder.build(builder.environments.server);
   await builder.build(builder.environments.client);
+  await builder.build(builder.environments.ssr);
 
   // __vite_rsc_manager.buildStep = "build";
   // await builder.build(builder.environments.rsc);

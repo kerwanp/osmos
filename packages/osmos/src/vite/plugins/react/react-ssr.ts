@@ -1,5 +1,5 @@
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { readFile } from "node:fs/promises";
+import { join } from "pathe";
 import {
   createServerModuleRunner,
   EnvironmentOptions,
@@ -41,17 +41,14 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
     async load(id) {
       if (id === $assetsId) {
         if (this.environment.mode === "build") {
-          // const clientManifest: Manifest = await readFile(
-          //   join(options.outDir, "../", "client", ".vite", "manifest.json"),
-          // ).then((r) => JSON.parse(r.toString()));
-          // TODO: Make this work again
-          const clientManifest: Manifest = {};
-
-          // const serverManifest: Manifest = await readFile(
-          //   join(options.outDir, "../", "server", ".vite", "manifest.json"),
-          // ).then((r) => JSON.parse(r.toString()));
-
-          // console.log(serverManifest);
+          const config = this.environment.getTopLevelConfig();
+          const clientManifest: Manifest = await readFile(
+            join(
+              config.environments.client.build.outDir,
+              ".vite",
+              "manifest.json",
+            ),
+          ).then((r) => JSON.parse(r.toString()));
 
           // const { head } = await getIndexHtmlTransform(viteDevServer);
           const entry = Object.values(clientManifest).find((r) => r.isEntry);
