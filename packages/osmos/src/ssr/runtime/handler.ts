@@ -8,14 +8,7 @@ import { ServerResponse } from "node:http";
 
 async function importClientReference(id: string) {
   const { default: manifest } = await import("virtual:react-server:manifest");
-
-  const imp = manifest[id];
-
-  if (!imp) {
-    throw new Error(`Cannot find reference ${id} in the client manifest`);
-  }
-
-  return imp.import();
+  return manifest.import(id);
 }
 
 // TODO: Memoize ?

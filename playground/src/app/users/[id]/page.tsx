@@ -1,7 +1,10 @@
-export default function Page({ params }: { params: { id: string } }) {
+import ClientComponent from "../../ClientComponent";
+
+export default function Page() {
   return (
     <div>
-      <h2>EDIT {params.id}</h2>
+      <div>SPECIFIC USER</div>
+      <ClientComponent />
     </div>
   );
 }

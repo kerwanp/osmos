@@ -1,16 +1,44 @@
-import { parse, tokenize } from "../src/utils/match";
+import { fileURLToPath } from "url";
+import { FileSystemRouter, parseFilePath } from "../src/fs/router";
 
-it("should parse file path routing to matchit pattern", () => {
-  expect(parse("/")).toBe("/");
-  expect(parse("/users")).toBe("/users");
-  expect(parse("/users/[userId]/edit")).toBe("/users/:userId/edit");
-  expect(parse("/[id]")).toBe("/:id");
-  expect(parse("/catch-all/[...segments]")).toBe("/catch-all/*");
+it("praseFilePath", () => {
+  expect(parseFilePath({ filePath: "src/page.tsx", dir: "src" })).toEqual({
+    type: "page",
+    src: "src/page.tsx",
+    path: "/",
+  });
+
+  expect(parseFilePath({ filePath: "src/users/page.tsx", dir: "src" })).toEqual(
+    {
+      type: "page",
+      src: "src/users/page.tsx",
+      path: "/users",
+    },
+  );
+
+  expect(
+    parseFilePath({ filePath: "src/users/[id]/layout.tsx", dir: "src" }),
+  ).toEqual({
+    type: "layout",
+    src: "src/users/[id]/layout.tsx",
+    path: "/users/[id]",
+  });
 });
 
-it("should transform file path routing to matchit tokens", () => {
-  expect(tokenize("/")).toEqual([{ old: "/", end: "", type: 0, val: "/" }]);
-  expect(tokenize("/users")).toEqual([
-    { old: "/users", end: "", type: 0, val: "users" },
-  ]);
+describe("FileSystemRouter", () => {
+  it("should work with simple", async () => {
+    const router = new FileSystemRouter({
+      extensions: ["tsx"],
+      dir: fileURLToPath(new URL("./fixtures/simple", import.meta.url)),
+    });
+
+    const routes = await router.getRoutes();
+
+    expect(routes).toEqual([
+      {
+        path: "/",
+        source: "/",
+      },
+    ]);
+  });
 });

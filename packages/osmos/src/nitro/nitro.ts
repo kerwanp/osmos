@@ -7,8 +7,8 @@ import {
 import { createServer } from "vite";
 import { OsmosApp } from "../core/app";
 import defu from "defu";
-import { join } from "pathe";
 import { fileURLToPath } from "node:url";
+import { eventHandler } from "h3";
 
 export async function createNitro(osmos: OsmosApp) {
   const config: NitroConfig = defu(
@@ -22,11 +22,10 @@ export async function createNitro(osmos: OsmosApp) {
       baseURL: osmos.options.app.baseURL,
       workspaceDir: osmos.options.workspaceDir,
       srcDir: osmos.options.serverDir,
-      compatibilityDate: "2024-12-07",
+      compatibilityDate: "2024-06-28",
       buildDir: osmos.options.buildDir,
       imports: false,
-      scanDirs: [osmos.options.serverDir],
-      renderer: join(osmos.options.buildDir, "dist", "ssr", "renderer.js"),
+      renderer: fileURLToPath(new URL("./runtime/renderer", import.meta.url)),
       appConfigFiles: [],
       handlers: [],
       devHandlers: [],
@@ -40,7 +39,17 @@ export async function createNitro(osmos: OsmosApp) {
         ),
       ],
       typescript: {
+        strict: true,
         generateTsConfig: true,
+        tsConfig: {
+          compilerOptions: {
+            target: "ESNext",
+            module: "Preserve",
+            moduleResolution: "Bundler",
+            jsxFactory: "React.createElement",
+            jsxFragmentFactory: "React.Fragment",
+          },
+        },
       },
       esbuild: {
         options: {

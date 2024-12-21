@@ -1,6 +1,12 @@
 import React from "react";
 import { createFromFetch, encodeReply } from "react-server-dom-esm/client";
-import { hydrateRoot } from "../../router/runtime/browser-router/dom";
+import { hydrateRoot, renderRoot } from "./client";
+
+if (import.meta.hot) {
+  import.meta.hot.on("rsc-update", () => {
+    renderRoot();
+  });
+}
 
 // TODO: Move this in vite plugin
 // @ts-expect-error
@@ -47,4 +53,4 @@ function ServerRoot() {
   return content as React.ReactNode;
 }
 
-hydrateRoot(document, <ServerRoot />, {});
+hydrateRoot(document, {});

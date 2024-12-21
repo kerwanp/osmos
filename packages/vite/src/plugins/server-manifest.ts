@@ -14,6 +14,14 @@ export default function serverManifest(): PluginOption {
     },
     load(id) {
       if (id === $virtualId) {
+        if (this.environment.mode === "dev") {
+          return [
+            `export default {`,
+            `import: (id) => import(id /* @vite-ignore */)`,
+            `}`,
+          ].join("\n");
+        }
+
         return [
           `export default {`,
           ...[...$global.clientReferences.entries()].map(

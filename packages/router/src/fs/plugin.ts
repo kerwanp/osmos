@@ -39,41 +39,35 @@ function hmr({
       const clientEnvironment = env.environments.client;
       const serverEnvironment = env.environments[environmentName];
 
-      router.addEventListener("reload", () => {
+      router.hook("reload", () => {
         const mod = serverEnvironment.moduleGraph.getModuleById(
           "\0virtual:osmos:routes",
         );
 
         if (mod) {
-          serverEnvironment.moduleGraph.invalidateModule(
-            mod,
-            undefined,
-            undefined,
-            true,
-          );
-
-          clientEnvironment.hot.send({ type: "full-reload" });
+          // serverEnvironment.moduleGraph.invalidateModule(
+          //   mod,
+          //   undefined,
+          //   undefined,
+          //   true,
+          // );
+          // clientEnvironment.hot.send({ type: 'custom' });
         }
       });
     },
     hotUpdate(options) {
-      if (this.environment.name !== "rsc") {
+      if (this.environment.name !== "server") return;
+
+      if (options.type === "create" && router.addRoute(options.file)) {
+        return [];
+      }
+
+      if (options.type === "delete" && router.removeRoute(options.file)) {
+        return [];
+      }
+
+      if (options.type === "update" && router.updateRoute(options.file)) {
         return;
-      }
-
-      console.log(options.modules);
-
-      if (options.type === "create") {
-        router.addRoute(options.file);
-      }
-
-      if (options.type === "delete") {
-        router.removeRoute(options.file);
-      }
-
-      if (options.type === "update") {
-        console.log("UPDATE", options.file);
-        router.updateRoute(options.file);
       }
 
       return;

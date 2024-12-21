@@ -37,6 +37,7 @@
     "esbuild": "^0.24.0",
     "fast-glob": "^3.3.2",
     "globby": "^14.0.2",
+    "hookable": "^5.5.3",
     "micromatch": "^4.0.8",
     "vite": "^6.0.3"
   },

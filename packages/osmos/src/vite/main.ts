@@ -74,6 +74,9 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           },
         },
         server: {
+          optimizeDeps: {
+            include: ["osmos", "osmos/link", "jiti"],
+          },
           build: {
             outDir: join(osmos.options.buildDir, "dist", "server"),
             rollupOptions: {

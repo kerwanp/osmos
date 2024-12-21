@@ -27,6 +27,7 @@ export default function reactServer(
       ],
     }),
     serverManifest(),
+    reactServerRefresh(),
   ];
 }
 
@@ -241,12 +242,25 @@ export function reactServerDirective(
 
           const relativePath = relative(osmosDir, entryPath);
 
-          console.log("TEST", join("../../../.osmos", relativePath));
           const hotfixPath = join("../../../../.osmos", relativePath);
 
           return buildImportProxy(id, hotfixPath, "import");
         }
       }
+    },
+  };
+}
+
+export function reactServerRefresh(): PluginOption {
+  return {
+    name: "osmos:react-server:refresh",
+    hotUpdate(ctx) {
+      if (this.environment.name !== "client") return;
+      console.log(ctx.file, "test");
+
+      this.environment.hot.send({ type: "custom", event: "rsc-update" });
+
+      return [];
     },
   };
 }

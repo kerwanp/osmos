@@ -76,10 +76,7 @@ export function reactSSR(options: ReactSSROptions): PluginOption {
 function environment(options: ReactSSROptions): EnvironmentOptions {
   return {
     optimizeDeps: {
-      include: ["react-server-dom-esm/client", "react-dom/server"],
-      esbuildOptions: {
-        target: "esnext",
-      },
+      include: ["react-server-dom-esm/client", "react-dom/server", "jiti"],
     },
     build: {
       manifest: true,
