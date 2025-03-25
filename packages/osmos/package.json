@@ -30,6 +30,12 @@
     },
     "./link": {
       "default": "./link.js"
+    },
+    "./navigation": {
+      "default": "./navigation.js"
+    },
+    "./dynamic": {
+      "default": "./dynamic.js"
     }
   },
   "keywords": [],
@@ -60,6 +66,7 @@
     "pathe": "^1.1.2",
     "pkg-types": "^1.2.1",
     "postcss": "^8.4.49",
+    "react-loadable": "^5.5.0",
     "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
     "react-server-dom-webpack": "^19.0.0",
     "std-env": "^3.8.0",

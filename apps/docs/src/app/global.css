@@ -1,1 +1,5 @@
 @import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+
+/* path of `fumadocs-ui` relative to the CSS file */
+@source '../../node_modules/fumadocs-ui/dist/**/*.js';

@@ -25,36 +25,23 @@ export async function ServerRouter({
     return null;
   }
 
-  const [Page, ...Layouts] = await Promise.all([
-    importer("page", page),
-    ...layouts.map((layout) => importer("layout", layout)),
-  ]);
+  async function RenderPage() {
+    const Page = await importer("page", page);
+    return <Page />;
+  }
 
-  async function RenderLayout({
-    layouts,
-    children,
-  }: {
-    layouts: any[];
-    children: ReactNode;
-  }) {
-    const Layout = layouts.shift();
+  async function RenderLayout({ layouts }: { layouts: any[] }) {
+    const layout = layouts.shift();
+    const Layout = await importer("layout", layout);
 
     return (
       <Layout>
-        {layouts.length ? (
-          <RenderLayout layouts={layouts} children={children} />
-        ) : (
-          children
-        )}
+        {layouts.length ? <RenderLayout layouts={layouts} /> : <RenderPage />}
       </Layout>
     );
   }
 
-  return (
-    <RenderLayout layouts={Layouts}>
-      <Page />
-    </RenderLayout>
-  );
+  return <RenderLayout layouts={layouts} />;
 }
 
 export type CreateServerRouterOptions = {

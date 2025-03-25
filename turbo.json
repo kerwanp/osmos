@@ -23,7 +23,7 @@
     },
     "stub": {
       "dependsOn": ["^stub"],
-      "cache": false
+      "cache": true
     },
     "dev": {
       "dependsOn": ["^stub"],

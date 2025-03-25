@@ -12,7 +12,7 @@ export default defineBuildConfig({
     "src/ssr/module",
     "src/client/module",
     "src/nitro/nitro",
-    ...["ssr", "server", "client", "nitro", "router"].map(
+    ...["ssr", "server", "client", "nitro", "router", "navigation"].map(
       (name) =>
         ({
           input: `src/${name}/runtime/`,

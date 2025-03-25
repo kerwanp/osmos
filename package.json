@@ -27,6 +27,9 @@
   "pnpm": {
     "patchedDependencies": {
       "@kentcdodds/tmp-react-server-dom-esm": "patches/@kentcdodds__tmp-react-server-dom-esm.patch"
+    },
+    "overrides": {
+      "next": "link:./packages/osmos"
     }
   }
 }

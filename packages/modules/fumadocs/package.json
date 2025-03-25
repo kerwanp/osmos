@@ -1,0 +1,45 @@
+{
+  "name": "@osmosjs/fumadocs",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "prepare": "osmos kit prepare",
+    "dev": "osmos kit prepare",
+    "build": "osmos kit build",
+    "play": "osmos dev --cwd playground",
+    "configure": "osmos configure @osmosjs/tailwindcss --cwd playground"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "default": "./dist/module.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@osmosjs/osmos": "workspace:*",
+    "@osmosjs/tsconfig": "workspace:*",
+    "fumadocs-mdx": "^11.5.7",
+    "ufo": "^1.5.4",
+    "vite": "^6.0.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rollup": "^4.28.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  }
+}

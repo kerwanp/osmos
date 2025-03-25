@@ -1,0 +1,11 @@
+{
+  "name": "@osmosjs/tailwindcss-playground",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^22.10.1"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2"
+  }
+}

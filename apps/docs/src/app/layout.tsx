@@ -1,12 +1,14 @@
+import { RootProvider } from "fumadocs-ui/provider";
 import "./global.css";
 
 import { ReactNode } from "react";
 
-export default async function Page({ children }: { children: ReactNode }) {
+export default function Page({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <head></head>
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="flex flex-col h-screen">
+        <RootProvider>{children}</RootProvider>
+      </body>
     </html>
   );
 }

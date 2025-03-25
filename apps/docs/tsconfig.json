@@ -9,7 +9,12 @@
     "moduleResolution": "bundler",
     "noImplicitAny": false,
     "declaration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@source": ["./.source/index.ts"]
+    }
   },
   "exclude": ["dist", "node_modules"],
   "include": ["src"]
