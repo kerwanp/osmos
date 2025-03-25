@@ -13,6 +13,7 @@ export type OsmosPluginOptions = {
   entries: {
     client: string;
     ssr: string;
+    server: string;
   };
 
   extensions: string[];
@@ -22,14 +23,15 @@ export default function osmos(options: OsmosPluginOptions): PluginOption {
   return [
     react(),
     reactServer({
-      environmentName: "server",
+      outDir: join(options.outDir, "server"),
+      entry: options.entries.server,
     }),
     reactClient({
       outDir: join(options.outDir, "client"),
       entry: options.entries.client,
     }),
     reactSSR({
-      outDir: join(options.outDir, "client"),
+      outDir: join(options.outDir, "ssr"),
       entry: options.entries.ssr,
     }),
     routerPlugin({

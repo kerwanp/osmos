@@ -4,7 +4,6 @@ import { fileURLToPath } from "mlly";
 import { join } from "pathe";
 import { serverCss } from "./plugins/react/server-css";
 import { nitro } from "./plugins/nitro";
-import postcss from "./plugins/postcss";
 import randomPort from "./plugins/random-port";
 import defu from "defu";
 import osmosVite from "@osmosjs/vite";
@@ -28,12 +27,12 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
             ssr: fileURLToPath(
               new URL("../ssr/runtime/handler", import.meta.url),
             ),
+            server: fileURLToPath(
+              new URL("../server/runtime/handler", import.meta.url),
+            ),
           },
           extensions: osmos.options.extensions,
         }),
-        // postcss({
-        //   plugins: osmos.options.postcss.plugins,
-        // }),
         nitro(osmos.nitro),
         serverCss({
           environmentName: "server",
@@ -47,38 +46,6 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
         middlewareMode: true,
         fs: {
           allow: [osmos.options.workspaceDir],
-        },
-      },
-      environments: {
-        ssr: {
-          consumer: "server",
-          build: {
-            target: "esnext",
-            outDir: join(osmos.options.buildDir, "dist", "ssr"),
-            rollupOptions: {
-              input: {
-                renderer: fileURLToPath(
-                  new URL("../nitro/runtime/renderer", import.meta.url),
-                ),
-              },
-            },
-          },
-        },
-        server: {
-          consumer: "server",
-          optimizeDeps: {
-            include: ["osmos", "osmos/link", "jiti"],
-          },
-          build: {
-            outDir: join(osmos.options.buildDir, "dist", "server"),
-            rollupOptions: {
-              input: {
-                handler: fileURLToPath(
-                  new URL("../server/runtime/handler", import.meta.url),
-                ),
-              },
-            },
-          },
         },
       },
     } satisfies InlineConfig,

@@ -17,7 +17,7 @@ export default function serverManifest(): PluginOption {
         if (this.environment.mode === "dev") {
           return [
             `export default {`,
-            `import: (id) => import(id /* @vite-ignore */)`,
+            `import: (id) => import(/* @vite-ignore */ id)`,
             `}`,
           ].join("\n");
         }

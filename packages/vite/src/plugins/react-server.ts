@@ -7,21 +7,27 @@ import { $global } from "../global";
 import serverManifest from "./server-manifest";
 
 export type ReactServerPluginOptions = {
-  environmentName: string;
+  environmentName?: string;
+  entry: string;
+  outDir: string;
 };
 
-export default function reactServer(
-  options: ReactServerPluginOptions,
-): PluginOption {
+export default function reactServer({
+  environmentName = "server",
+  entry,
+  outDir,
+}: ReactServerPluginOptions): PluginOption {
   return [
     reactServerEnvironment({
-      environmentName: options.environmentName,
+      environmentName,
+      entry: entry,
+      outDir,
     }),
     reactServerTransform({
-      environmentName: options.environmentName,
+      environmentName,
     }),
     reactServerDirective({
-      environmentName: options.environmentName,
+      environmentName,
       modules: [
         "/home/martin/workspace/random/osmos/packages/osmos/src/server/runtime/renderer.tsx",
       ],
@@ -33,6 +39,8 @@ export default function reactServer(
 
 export type ReactServerEnvironmentPluginOptions = {
   environmentName: string;
+  entry: string;
+  outDir: string;
 };
 
 export function reactServerEnvironment(
@@ -48,6 +56,12 @@ export function reactServerEnvironment(
       return {
         build: {
           target: "esnext",
+          outDir: options.outDir,
+          rollupOptions: {
+            input: {
+              index: options.entry,
+            },
+          },
         },
         optimizeDeps: {
           include: [

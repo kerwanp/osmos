@@ -21,7 +21,12 @@
       "dependsOn": ["^prepare"],
       "cache": false
     },
+    "stub": {
+      "dependsOn": ["^stub"],
+      "cache": false
+    },
     "dev": {
+      "dependsOn": ["^stub"],
       "cache": false,
       "persistent": true
     },
