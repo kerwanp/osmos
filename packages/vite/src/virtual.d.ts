@@ -19,3 +19,7 @@ declare module "virtual:react-server:assets" {
 declare global {
   var __vite_rsc_runner: ModuleRunner;
 }
+
+declare global {
+  var __vite_ssr_runner: ModuleRunner;
+}

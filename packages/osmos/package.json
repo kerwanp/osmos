@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepare": "unbuild --stub",
+    "dev": "unbuild --stub",
     "build": "unbuild",
     "test": "vitest"
   },
@@ -29,7 +29,6 @@
       "default": "./dist/module/index.mjs"
     },
     "./link": {
-      "types": "./dist/link.d.ts",
       "default": "./link.js"
     }
   },

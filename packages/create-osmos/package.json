@@ -4,7 +4,6 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "prepare": "unbuild --stub",
     "build": "unbuild"
   },
   "files": [

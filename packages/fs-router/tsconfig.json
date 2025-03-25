@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "strict": true,
+    "allowJs": true,
+    "target": "ESNext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "noImplicitAny": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "types": ["vite/client", "vitest/globals"]
+  },
+  "exclude": ["dist", "node_modules"],
+  "include": ["src", "test"]
+}

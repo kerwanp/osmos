@@ -1,7 +1,7 @@
 import ReactServerDOM from "react-server-dom-esm/client";
 import React from "react";
 import { render } from "./dom";
-import { TypedEventTarget } from "../../types/event-target";
+import { TypedEventTarget } from "../types/event-target";
 
 interface BrowserRouterEvents {}
 

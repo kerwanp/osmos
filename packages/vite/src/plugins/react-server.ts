@@ -46,6 +46,9 @@ export function reactServerEnvironment(
     configEnvironment(name) {
       if (name !== options.environmentName) return;
       return {
+        build: {
+          target: "esnext",
+        },
         optimizeDeps: {
           include: [
             "react",

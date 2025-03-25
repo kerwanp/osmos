@@ -1,13 +1,9 @@
 import { createBuilder, createServer, InlineConfig } from "vite";
 import { OsmosApp } from "../core/app";
-import baseReact from "@vitejs/plugin-react";
 import { fileURLToPath } from "mlly";
-import { reactSSR } from "./plugins/react/react-ssr";
 import { join } from "pathe";
-import { reactClient } from "./plugins/react/react-client";
 import { serverCss } from "./plugins/react/server-css";
 import { nitro } from "./plugins/nitro";
-import { fileSystemRouter } from "@osmosjs/router/fs";
 import postcss from "./plugins/postcss";
 import randomPort from "./plugins/random-port";
 import defu from "defu";
@@ -22,30 +18,23 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
       root: osmos.options.rootDir,
       plugins: [
         randomPort(),
-        osmosVite(),
-        fileSystemRouter({
-          dir: osmos.options.appDir,
+        osmosVite({
+          outDir: join(osmos.options.buildDir, "dist"),
+          appDir: osmos.options.appDir,
+          entries: {
+            client: fileURLToPath(
+              new URL("../client/runtime/entry", import.meta.url),
+            ),
+            ssr: fileURLToPath(
+              new URL("../ssr/runtime/handler", import.meta.url),
+            ),
+          },
           extensions: osmos.options.extensions,
-          files: ["page", "layout"],
-          environmentName: "server",
         }),
         postcss({
           plugins: osmos.options.postcss.plugins,
         }),
-        baseReact(),
         nitro(osmos.nitro),
-        reactSSR({
-          outDir: join(osmos.options.buildDir, "dist", "ssr"),
-          entry: fileURLToPath(
-            new URL("../ssr/runtime/handler", import.meta.url),
-          ),
-        }),
-        reactClient({
-          outDir: join(osmos.options.buildDir, "dist", "client"),
-          entry: fileURLToPath(
-            new URL("../client/runtime/entry", import.meta.url),
-          ),
-        }),
         serverCss({
           environmentName: "server",
           serverEntry: fileURLToPath(
@@ -62,7 +51,9 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
       },
       environments: {
         ssr: {
+          consumer: "server",
           build: {
+            target: "esnext",
             outDir: join(osmos.options.buildDir, "dist", "ssr"),
             rollupOptions: {
               input: {
@@ -74,6 +65,7 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           },
         },
         server: {
+          consumer: "server",
           optimizeDeps: {
             include: ["osmos", "osmos/link", "jiti"],
           },
@@ -89,7 +81,7 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           },
         },
       },
-    },
+    } satisfies InlineConfig,
     osmos.options.vite,
   );
 }

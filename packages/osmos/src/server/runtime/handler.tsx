@@ -1,8 +1,8 @@
 import { eventHandler, setHeaders } from "h3";
 import { renderToPipeableStream } from "react-server-dom-esm/server";
 import { createServerRouter } from "@osmosjs/router/server";
+import { PassThrough } from "node:stream";
 import routes from "virtual:osmos:routes";
-import { PassThrough, Readable, Writable } from "node:stream";
 
 export default eventHandler(async (event) => {
   const stream = render(event.path);
@@ -18,8 +18,7 @@ export async function render(location: string) {
   const Router = createServerRouter({
     routes,
     location,
-    importer: (route) =>
-      (route as any).source.import().then((m: any) => m.default),
+    importer: (type, file) => file.source.import().then((m: any) => m.default),
   });
 
   // TODO: Use abort

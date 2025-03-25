@@ -1,74 +1,66 @@
-import type { FC } from "react";
-import type { Route } from "../types";
-import { matchRoutes } from "../utils/routes";
+import type { FC, ReactNode } from "react";
+import type { Router } from "../types";
+import { createMatcherFromExport } from "radix3";
+import consola from "consola";
 
-type RouteWithMatches = ReturnType<typeof matchRoutes>;
-type Importer = (route: Route) => Promise<FC<any>>;
-
-export async function importRoute(route: Route) {
-  return (route.source as any).import().then((r: any) => r.default);
-}
-
-function isRootLayout(route: Route) {
-  return route.type === "layout" && route.path === "/";
-}
-
-async function Renderer({
-  routes,
-  importer,
-}: {
-  routes: RouteWithMatches;
-  importer: Importer;
-}) {
-  const [next, params] = routes.splice(0, 1)[0];
-
-  const PageOrLayout = await importer(next);
-  if (next.type === "layout") {
-    return (
-      <PageOrLayout params={params}>
-        <Renderer routes={routes} importer={importer} />
-      </PageOrLayout>
-    );
-  }
-
-  return <PageOrLayout params={params} />;
-}
+type Importer = (type: string, file: any) => Promise<FC<any>>;
 
 export async function ServerRouter({
   routes,
   location,
   importer,
 }: {
-  routes: Route[];
+  routes: Router;
   location: string;
   importer: Importer;
 }) {
-  const matches = matchRoutes(location, routes);
+  const matcher = createMatcherFromExport(routes);
+  const matches = matcher.matchAll(location);
 
-  // If last item is not a page, it is a 404
-  // TODO: Later we want to handle custom error pages
-  if (matches[matches.length - 1][0]?.type !== "page") {
-    return <div>404 Not found</div>;
+  const page = matches[matches.length - 1];
+  const layouts = matches.filter((m) => m.type === "layout");
+
+  if (!page || page.type !== "page") {
+    consola.error(`404: ${location}`);
+    return null;
   }
 
-  const rootLayout = matches.splice(0, 1)[0];
-  if (!rootLayout || !isRootLayout(rootLayout[0])) {
-    throw new Error("No root layout found");
-  }
+  const [Page, ...Layouts] = await Promise.all([
+    importer("page", page),
+    ...layouts.map((layout) => importer("layout", layout)),
+  ]);
 
-  const RootLayout = await importer(rootLayout[0]);
+  async function RenderLayout({
+    layouts,
+    children,
+  }: {
+    layouts: any[];
+    children: ReactNode;
+  }) {
+    const Layout = layouts.shift();
+
+    return (
+      <Layout>
+        {layouts.length ? (
+          <RenderLayout layouts={layouts} children={children} />
+        ) : (
+          children
+        )}
+      </Layout>
+    );
+  }
 
   return (
-    <RootLayout params={rootLayout[1]}>
-      <Renderer routes={matches} importer={importer} />
-    </RootLayout>
+    <RenderLayout layouts={Layouts}>
+      <Page />
+    </RenderLayout>
   );
 }
 
 export type CreateServerRouterOptions = {
-  routes: Route[];
+  routes: Router;
   location: string;
-  importer: (route: Route) => Promise<FC<any>>;
+  importer: Importer;
 };
 
 export function createServerRouter(options: CreateServerRouterOptions): FC {

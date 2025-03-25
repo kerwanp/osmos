@@ -1,7 +1,3 @@
-export type Route = {
-  path: string;
-  pattern: string;
-  power: number;
-  type: string;
-  source: string;
-};
+import { SerializedRouter } from "@osmosjs/fs-router/types";
+
+export type Router = SerializedRouter;

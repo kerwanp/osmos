@@ -1,13 +1,12 @@
 {
-  "name": "@osmosjs/vite",
+  "name": "@osmosjs/fs-router",
   "version": "0.0.0",
   "description": "",
   "type": "module",
   "scripts": {
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "test": "vitest",
-    "lint": "eslint"
+    "test": "vitest"
   },
   "files": [
     "dist",
@@ -18,24 +17,27 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
     },
-    "./types": "./src/types.d.ts",
-    "./virtual": "./src/virtual.d.ts"
+    "./vite": {
+      "types": "./dist/vite/main.d.ts",
+      "default": "./dist/vite/main.mjs"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@osmosjs/router": "workspace:*",
-    "@vitejs/plugin-react": "^4.3.4",
-    "es-module-lexer": "^1.5.4",
-    "esbuild": "^0.24.0",
+    "consola": "^3.2.3",
+    "globby": "^14.0.2",
+    "hookable": "^5.5.3",
     "pathe": "^1.1.2",
-    "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
-    "vite": "^6.0.3",
-    "vite-plugin-virtual": "^0.3.0"
+    "radix3": "^1.1.2",
+    "vite": "^6.0.3"
   },
   "devDependencies": {
-    "@osmosjs/eslint": "workspace:*",
+    "@types/micromatch": "^4.0.9",
     "@types/node": "^22.10.1",
     "unbuild": "^3.0.1",
     "vitest": "^2.1.8"

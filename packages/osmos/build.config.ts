@@ -12,7 +12,6 @@ export default defineBuildConfig({
     "src/ssr/module",
     "src/client/module",
     "src/nitro/nitro",
-    "src/link",
     ...["ssr", "server", "client", "nitro", "router"].map(
       (name) =>
         ({

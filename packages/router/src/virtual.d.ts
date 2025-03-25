@@ -1,4 +1,4 @@
 declare module "virtual:osmos:routes" {
-  const data: import("./types").Route[];
+  const data: import("./types").Router;
   export default data;
 }

@@ -14,7 +14,7 @@ export type ReactSSROptions = {
   outDir: string;
 };
 
-export function reactSSR(options: ReactSSROptions): PluginOption {
+export default function reactSSR(options: ReactSSROptions): PluginOption {
   const assetsId = "$osmos/ssr-assets";
   const $assetsId = `\0${assetsId}`;
 
@@ -99,8 +99,4 @@ async function getIndexHtmlTransform(server: ViteDevServer) {
   const match = html.match(/<head>(.*)<\/head>/s)!;
   const head = match[1];
   return { head };
-}
-
-declare global {
-  var __vite_ssr_runner: ModuleRunner;
 }
