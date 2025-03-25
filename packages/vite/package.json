@@ -28,17 +28,17 @@
     "@osmosjs/router": "workspace:*",
     "@vitejs/plugin-react": "^4.3.4",
     "es-module-lexer": "^1.5.4",
-    "esbuild": "^0.24.0",
-    "pathe": "^1.1.2",
+    "esbuild": "^0.25.1",
+    "pathe": "^2.0.3",
     "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
     "vite": "^6.0.3",
-    "vite-plugin-virtual": "^0.3.0"
+    "vite-plugin-virtual": "^0.4.0"
   },
   "devDependencies": {
     "@osmosjs/eslint": "workspace:*",
     "@types/node": "^22.10.1",
     "unbuild": "^3.0.1",
-    "vitest": "^2.1.8"
+    "vitest": "^3.0.9"
   },
   "publishConfig": {
     "access": "public",

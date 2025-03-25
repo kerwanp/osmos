@@ -18,12 +18,12 @@
     "@osmosjs/osmos": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1"
+    "react-server-dom-esm": "npm:@kentcdodds/tmp-react-server-dom-esm@19.0.1",
+    "tailwindcss": "^4.0.15"
   },
   "devDependencies": {
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
-    "tailwindcss": "^3.4.16",
     "vite": "^6.0.3"
   }
 }

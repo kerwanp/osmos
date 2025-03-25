@@ -31,9 +31,9 @@ export function createViteConfig(osmos: OsmosApp): InlineConfig {
           },
           extensions: osmos.options.extensions,
         }),
-        postcss({
-          plugins: osmos.options.postcss.plugins,
-        }),
+        // postcss({
+        //   plugins: osmos.options.postcss.plugins,
+        // }),
         nitro(osmos.nitro),
         serverCss({
           environmentName: "server",

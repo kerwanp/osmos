@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "osmos kit prepare",
+    "dev": "osmos kit prepare",
     "build": "osmos kit build",
     "play": "osmos dev --cwd playground",
     "configure": "osmos configure @osmosjs/tailwindcss --cwd playground"
@@ -23,16 +24,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@osmosjs/osmos": "workspace:*",
+    "@osmosjs/tsconfig": "workspace:*",
+    "@tailwindcss/vite": "^4.0.15",
     "autoprefixer": "^10.4.20",
     "fast-glob": "^3.3.2",
     "h3": "npm:h3-nightly@latest",
     "nypm": "^0.4.1",
-    "@osmosjs/osmos": "workspace:*",
-    "@osmosjs/tsconfig": "workspace:*",
     "pathe": "^1.1.2",
     "postcss": "^8.4.49",
     "tailwind-config-viewer": "^2.0.4",
-    "tailwindcss": "^3.4.16",
+    "tailwindcss": "^3.4.17",
     "ufo": "^1.5.4"
   },
   "devDependencies": {
