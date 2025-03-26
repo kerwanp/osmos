@@ -1,15 +1,11 @@
 "use client";
 
-import { useTest } from "@/providers/test.provider";
+import { MYSYMBOL, useTest } from "@/providers/test.provider";
+import { Hello } from "./hello";
 
-export default function Page() {
+export default function Page({ symbol }) {
   const test = useTest();
-
   console.log(test);
-
-  return (
-    <div>
-      <h2 className="text-xl">Create User</h2>
-    </div>
-  );
+  console.log(symbol === MYSYMBOL);
+  return <Hello />;
 }

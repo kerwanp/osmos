@@ -129,8 +129,9 @@ export function reactServerTransform(
           return [
             `export default {`,
             ...[...$global.clientReferences.entries()].map(
-              ([id, { hash, fileName }]) =>
-                `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`,
+              ([id, { hash, fileName }]) => {
+                return `'${hash}': { import: () => import('${id}'), clientAsset: '${fileName}' },`;
+              },
             ),
             "}",
           ].join("\n");
@@ -149,11 +150,14 @@ export function reactServerTransform(
     async transform(code, id) {
       if (this.environment.name !== options.environmentName) return;
 
-      const url = this.environment.mode === "dev" ? id : generateAssetUrl(id);
+      let url = this.environment.mode === "dev" ? id : generateAssetUrl(id);
 
       const context = {
         format: "module",
-        url,
+        url: url.replace(
+          "/home/martin/workspace/random/osmos/playground/",
+          "/",
+        ),
       };
 
       let { source } = await transformSource(
