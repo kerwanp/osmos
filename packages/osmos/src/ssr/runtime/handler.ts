@@ -5,6 +5,7 @@ import ReactServerDOM from "react-server-dom-esm/client";
 import { PassThrough } from "node:stream";
 import ReactDOM from "react-dom/server";
 import { ServerResponse } from "node:http";
+import manifest from "virtual:react-server:manifest";
 
 async function importClientReference(id: string) {
   const { default: manifest } = await import("virtual:react-server:manifest");
@@ -12,7 +13,23 @@ async function importClientReference(id: string) {
 }
 
 // TODO: Memoize ?
-globalThis.__import_client_ref = importClientReference;
+globalThis.__vite__ = {
+  import: async (id) => {
+    console.log("Retrieving import", id);
+    const { default: manifest } = await import("virtual:react-server:manifest");
+    return __vite_ssr_runner.import(id);
+  },
+  cached: async (id) => {
+    // const cachedModule = __vite_ssr_runner.import(id);
+    //
+    // if (cachedModule) {
+    //   return {
+    //     status: "fullfilled",
+    //     value: cachedModule,
+    //   };
+    // }
+  },
+};
 
 export default eventHandler(async (event) => {
   // We clone the request to be handled by the react-server handler

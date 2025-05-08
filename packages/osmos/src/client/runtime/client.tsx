@@ -5,6 +5,13 @@ import {
   Root,
 } from "react-dom/client";
 import { createFromFetch, encodeReply } from "react-server-dom-esm/client";
+import assets from "virtual:react-server:assets";
+
+globalThis.__vite__ = {
+  import: (id: string) => {
+    return assets[id].import();
+  },
+};
 
 const getGlobalLocation = () =>
   window.location.pathname + window.location.search;
@@ -12,7 +19,7 @@ const getGlobalLocation = () =>
 export function fetchRSC(location: string) {
   const fetchPromise = fetch(`/_server${location}`);
   return createFromFetch(fetchPromise, {
-    moduleBaseURL: "/_osmos",
+    moduleBaseURL: "",
     callServer,
   });
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { TestProvider } from "@/providers/test.provider";
 import { useState } from "react";
 
 export default function ClientComponent() {

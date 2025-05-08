@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "stub": "unbuild --stub",
+    "dev": "unbuild --watch",
     "build": "unbuild",
     "test": "vitest"
   },
@@ -18,6 +18,7 @@
       "default": "./dist/index.mjs"
     },
     "./server": "./src/server/index.ts",
+    "./client": "./dist/client/main.mjs",
     "./vite": "./dist/vite/main.mjs",
     "./virtual": "./src/virtual.d.ts"
   },
@@ -29,6 +30,7 @@
     "@poppinss/matchit": "^3.1.2",
     "consola": "^3.2.3",
     "es-module-lexer": "^1.5.4",
+    "react-server-dom-esm": "workspace:*",
     "esbuild": "^0.24.0",
     "fast-glob": "^3.3.2",
     "globby": "^14.0.2",

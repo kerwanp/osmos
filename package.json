@@ -20,16 +20,18 @@
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
   },
-  "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
   },
+  "packageManager": "pnpm@9.15.2",
   "pnpm": {
-    "patchedDependencies": {
-      "@kentcdodds/tmp-react-server-dom-esm": "patches/@kentcdodds__tmp-react-server-dom-esm.patch"
-    },
     "overrides": {
       "next": "link:./packages/osmos"
     }
+  },
+  "resolutions": {
+    "react-server-dom-esm": "workspace:*",
+    "react": "0.0.0-experimental-e1e74071-20250321",
+    "react-dom": "0.0.0-experimental-e1e74071-20250321"
   }
 }

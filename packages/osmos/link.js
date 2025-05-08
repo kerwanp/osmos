@@ -1,3 +1,3 @@
 "use client";
 
-export { default } from "./dist/router/runtime/browser-router/link.js";
+export { Link as default } from "@osmosjs/router/client";

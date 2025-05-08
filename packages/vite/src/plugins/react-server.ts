@@ -154,10 +154,7 @@ export function reactServerTransform(
 
       const context = {
         format: "module",
-        url: url.replace(
-          "/home/martin/workspace/random/osmos/playground/",
-          "/",
-        ),
+        url,
       };
 
       let { source } = await transformSource(

@@ -11,9 +11,7 @@
     "bin",
     "templates"
   ],
-  "bin": {
-    "create-osmos": "./bin/create-osmos.mjs"
-  },
+  "bin": "./bin/create-osmos.mjs",
   "keywords": [],
   "author": "",
   "license": "MIT",

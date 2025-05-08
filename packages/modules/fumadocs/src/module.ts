@@ -13,8 +13,9 @@ export default defineOsmosModule({
       ...app.options.vite.resolve,
       alias: {
         ...app.options.vite.resolve?.alias,
+        next: "@osmosjs/osmos",
         "next/link": "@osmosjs/osmos/link",
-        "next/image": "@osmosjs/osmos/link",
+        "next/image": "@osmosjs/osmos/image",
         "next/navigation": "@osmosjs/osmos/navigation",
         "next/dynamic": "@osmosjs/osmos/dynamic",
       },

@@ -12,9 +12,7 @@
     "dist",
     "bin"
   ],
-  "bin": {
-    "osmos": "./bin/osmos.mjs"
-  },
+  "bin": "./bin/osmos.mjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,6 +34,9 @@
     },
     "./dynamic": {
       "default": "./dynamic.js"
+    },
+    "./image": {
+      "default": "./image.js"
     }
   },
   "keywords": [],
